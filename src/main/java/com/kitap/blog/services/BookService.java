@@ -1,5 +1,7 @@
-package com.kitap.blog.book;
+package com.kitap.blog.services;
 
+import com.kitap.blog.entities.Book;
+import com.kitap.blog.repositories.BookRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,7 +28,7 @@ public class BookService {
 
     public boolean addBook(Book book) {
         try {
-            bookRepository.save(book);
+            bookRepository.saveAndFlush(book);
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -56,8 +58,8 @@ public class BookService {
             if (name != null && name.length() > 0 && !Objects.equals(book.getName(), name)) {
                 book.setName(name);
             }
-            if (author_id != null && author_id > 0 && !Objects.equals(book.getAuthorId(), author_id)) {
-                book.setAuthorId(author_id);
+            if (author_id != null && author_id > 0 && !Objects.equals(book.getAuthor_id(), author_id)) {
+                book.setAuthor_id(author_id);
             }
             if (about != null && about.length() > 0 && !Objects.equals(book.getAbout(), about)) {
                 book.setAbout(about);

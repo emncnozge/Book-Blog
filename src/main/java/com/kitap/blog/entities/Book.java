@@ -1,4 +1,4 @@
-package com.kitap.blog.book;
+package com.kitap.blog.entities;
 
 import javax.persistence.*;
 
@@ -11,6 +11,7 @@ public class Book {
     private Long book_id;
     @Column(name = "name", nullable = false)
     private String name;
+
     @Column(name = "author_id", nullable = false)
     private Long author_id;
 
@@ -20,10 +21,6 @@ public class Book {
     @Column(name = "photo_url", nullable = true)
     private String photo_url;
 
-    public Book() {
-
-    }
-
     public Book(Long book_id, String name, Long author_id, String about, String photo_url) {
         this.book_id = book_id;
         this.name = name;
@@ -32,11 +29,14 @@ public class Book {
         this.photo_url = photo_url;
     }
 
-    public Long getId() {
+    public Book() {
+    }
+
+    public Long getBook_id() {
         return book_id;
     }
 
-    public void setId(Long book_id) {
+    public void setBook_id(Long book_id) {
         this.book_id = book_id;
     }
 
@@ -48,11 +48,11 @@ public class Book {
         this.name = name;
     }
 
-    public Long getAuthorId() {
+    public Long getAuthor_id() {
         return author_id;
     }
 
-    public void setAuthorId(Long author_id) {
+    public void setAuthor_id(Long author_id) {
         this.author_id = author_id;
     }
 

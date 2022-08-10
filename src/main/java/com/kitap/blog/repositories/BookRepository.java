@@ -1,5 +1,6 @@
-package com.kitap.blog.book;
+package com.kitap.blog.repositories;
 
+import com.kitap.blog.entities.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

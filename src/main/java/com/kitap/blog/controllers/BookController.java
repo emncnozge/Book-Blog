@@ -1,5 +1,7 @@
-package com.kitap.blog.book;
+package com.kitap.blog.controllers;
 
+import com.kitap.blog.services.BookService;
+import com.kitap.blog.entities.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
