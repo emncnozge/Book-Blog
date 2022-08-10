@@ -22,21 +22,28 @@ public class BookController {
         return bookService.getBooks();
     }
 
+    @GetMapping(path = "{book_id}")
+    public Book getBook(@PathVariable("book_id") Long book_id) {
+        return bookService.getBook(book_id);
+    }
+
     @PostMapping
-    public boolean addNewBook(@RequestBody Book book) {
-        return bookService.addNewBook(book);
+    public boolean addBook(@RequestBody Book book) {
+        return bookService.addBook(book);
     }
 
-    @DeleteMapping(path = "{id}")
-    public boolean deleteBook(@PathVariable("id") Long id) {
-        return bookService.deleteBook(id);
+    @DeleteMapping(path = "{book_id}")
+    public boolean deleteBook(@PathVariable("book_id") Long book_id) {
+        return bookService.deleteBook(book_id);
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "{book_id}")
     public boolean updateBook(
-            @PathVariable("id") Long id,
-            @RequestParam(required = false) Long authorId,
-            @RequestParam(required = false) String name) {
-        return bookService.updateBook(id, authorId, name);
+            @PathVariable("book_id") Long book_id,
+            @RequestParam(required = false) Long author_id,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String about,
+            @RequestParam(required = false) String photo_url) {
+        return bookService.updateBook(book_id, author_id, name, about, photo_url);
     }
 }

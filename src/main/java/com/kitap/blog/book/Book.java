@@ -7,30 +7,37 @@ public class Book {
     @Id
     @SequenceGenerator(name = "book_sequence", sequenceName = "book_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_sequence")
-    @Column(name = "id", updatable = false)
-    private Long id;
+    @Column(name = "book_id", updatable = false)
+    private Long book_id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "authorId", nullable = false)
-    private Long authorId;
+    @Column(name = "author_id", nullable = false)
+    private Long author_id;
+
+    @Column(name = "about", nullable = false)
+    private String about;
+
+    @Column(name = "photo_url", nullable = true)
+    private String photo_url;
 
     public Book() {
 
     }
 
-    public Book(Long id, String name, Long authorId) {
-        this.id = id;
+    public Book(Long book_id, String name, Long author_id, String about, String photo_url) {
+        this.book_id = book_id;
         this.name = name;
-        this.authorId = authorId;
+        this.author_id = author_id;
+        this.about = about;
+        this.photo_url = photo_url;
     }
-
 
     public Long getId() {
-        return id;
+        return book_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long book_id) {
+        this.book_id = book_id;
     }
 
     public String getName() {
@@ -42,15 +49,37 @@ public class Book {
     }
 
     public Long getAuthorId() {
-        return authorId;
+        return author_id;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setAuthorId(Long author_id) {
+        this.author_id = author_id;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getPhoto_url() {
+        return photo_url;
+    }
+
+    public void setPhoto_url(String photo_url) {
+        this.photo_url = photo_url;
     }
 
     @Override
     public String toString() {
-        return "Book{" + "id=" + id + ", name='" + name + '\'' + ", authorId=" + authorId + '}';
+        return "Book{" +
+                "book_id=" + book_id +
+                ", name='" + name + '\'' +
+                ", author_id=" + author_id +
+                ", about='" + about + '\'' +
+                ", photo_url='" + photo_url + '\'' +
+                '}';
     }
 }

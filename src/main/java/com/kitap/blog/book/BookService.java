@@ -18,7 +18,13 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public boolean addNewBook(Book book) {
+    public Book getBook(Long id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() ->
+                new IllegalStateException("Error! Selected book doesn't exist."));
+    }
+
+    public boolean addBook(Book book) {
         try {
             bookRepository.save(book);
             return true;
@@ -28,11 +34,11 @@ public class BookService {
         }
     }
 
-    public boolean deleteBook(Long id) {
+    public boolean deleteBook(Long book_id) {
         try {
-            boolean exists = bookRepository.existsById(id);
+            boolean exists = bookRepository.existsById(book_id);
             if (exists) {
-                bookRepository.deleteById(id);
+                bookRepository.deleteById(book_id);
                 return true;
             } else return false;
 
@@ -43,19 +49,27 @@ public class BookService {
     }
 
     @Transactional
-    public boolean updateBook(Long id, Long authorId, String name) {
-        boolean exists = bookRepository.existsById(id);
-        if(exists) {
-            Book book = bookRepository.findById(id).orElseThrow(()-> new IllegalStateException("Error"));
-            if(name != null && name.length()>0 && !Objects.equals(book.getName(),name)){
+    public boolean updateBook(Long book_id, Long author_id, String name, String about, String photo_url) {
+        boolean exists = bookRepository.existsById(book_id);
+        if (exists) {
+            Book book = bookRepository.findById(book_id).orElseThrow(() -> new IllegalStateException("Error"));
+            if (name != null && name.length() > 0 && !Objects.equals(book.getName(), name)) {
                 book.setName(name);
             }
-            if(authorId != null && authorId>0 && !Objects.equals(book.getAuthorId(),authorId)){
-                book.setAuthorId(authorId);
+            if (author_id != null && author_id > 0 && !Objects.equals(book.getAuthorId(), author_id)) {
+                book.setAuthorId(author_id);
+            }
+            if (about != null && about.length() > 0 && !Objects.equals(book.getAbout(), about)) {
+                book.setAbout(about);
+            }
+            System.out.println(photo_url);
+
+            if (photo_url != null && photo_url.length() > 0 && !Objects.equals(book.getPhoto_url(), photo_url)) {
+                book.setPhoto_url(photo_url);
+                System.out.println("girdi");
             }
             return true;
-        }
-        else return false;
+        } else return false;
 
 
     }
