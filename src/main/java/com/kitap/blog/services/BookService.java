@@ -68,7 +68,6 @@ public class BookService {
 
             if (photo_url != null && photo_url.length() > 0 && !Objects.equals(book.getPhoto_url(), photo_url)) {
                 book.setPhoto_url(photo_url);
-                System.out.println("girdi");
             }
             return true;
         } else return false;
