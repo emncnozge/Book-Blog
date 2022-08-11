@@ -69,5 +69,5 @@ public class Author {
                 ", photo_url='" + photo_url + '\'' +
                 '}';
     }
-    
+
 }

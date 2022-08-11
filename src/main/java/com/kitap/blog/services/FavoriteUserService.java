@@ -14,12 +14,12 @@ public class FavoriteUserService {
         this.favoriteUserRepository = favoriteUserRepository;
     }
 
-    public List<FavoriteUser> getFavoriteUsers(String user_email) {
-        return favoriteUserRepository.getFavoriteUsers(user_email);
+    public List<FavoriteUser> getFavoriteUsers(Long user_id) {
+        return favoriteUserRepository.getFavoriteUsers(user_id);
     }
 
-    public boolean getFavoriteUser(String user_email, String favorite_user_email) {
-        return (favoriteUserRepository.getFavoriteUser(user_email, favorite_user_email).size() > 0);
+    public boolean getFavoriteUser(Long user_id, Long favorite_user_id) {
+        return (favoriteUserRepository.getFavoriteUser(user_id, favorite_user_id).size() > 0);
     }
 
     public boolean addFavoriteUser(FavoriteUser favoriteUser) {

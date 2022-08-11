@@ -11,19 +11,19 @@ public class FavoriteUser {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "user_email", nullable = false)
-    private String user_email;
+    @Column(name = "user_id", nullable = false)
+    private Long user_id;
 
-    @Column(name = "favorite_user_email", nullable = false)
-    private String favorite_user_email;
+    @Column(name = "favorite_user_id", nullable = false)
+    private Long favorite_user_id;
 
     public FavoriteUser() {
     }
 
-    public FavoriteUser(Long id, String user_email, String favorite_user_email) {
+    public FavoriteUser(Long id, Long user_id, Long favorite_user_id) {
         this.id = id;
-        this.user_email = user_email;
-        this.favorite_user_email = favorite_user_email;
+        this.user_id = user_id;
+        this.favorite_user_id = favorite_user_id;
     }
 
     public Long getId() {
@@ -34,28 +34,28 @@ public class FavoriteUser {
         this.id = id;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public Long getUser_id() {
+        return user_id;
     }
 
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 
-    public String getFavorite_user_email() {
-        return favorite_user_email;
+    public Long getFavorite_user_id() {
+        return favorite_user_id;
     }
 
-    public void setFavorite_user_email(String favorite_user_email) {
-        this.favorite_user_email = favorite_user_email;
+    public void setFavorite_user_id(Long favorite_user_id) {
+        this.favorite_user_id = favorite_user_id;
     }
 
     @Override
     public String toString() {
         return "FavoriteUser{" +
-                "id='" + id + '\'' +
-                ", user_email='" + user_email + '\'' +
-                ", favorite_user_email='" + favorite_user_email + '\'' +
+                "id=" + id +
+                ", user_id=" + user_id +
+                ", favorite_user_id=" + favorite_user_id +
                 '}';
     }
 }

@@ -8,7 +8,7 @@ public class User {
     @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     @Column(name = "user_id", updatable = false)
-    private String user_id;
+    private Long user_id;
 
     @Column(name = "email")
     private String email;
@@ -31,7 +31,7 @@ public class User {
     public User() {
     }
 
-    public User(String user_id, String email, String password, String name, String about, String photo_url, boolean is_admin) {
+    public User(Long user_id, String email, String password, String name, String about, String photo_url, boolean is_admin) {
         this.user_id = user_id;
         this.email = email;
         this.password = password;
@@ -41,11 +41,11 @@ public class User {
         this.is_admin = is_admin;
     }
 
-    public String getUser_id() {
+    public Long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
 
