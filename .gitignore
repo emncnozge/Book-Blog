@@ -1,2 +1,5 @@
 /Backend/.idea
 /Backend/target
+/Frontend/node_modules
+/Frontend/build
+/Frontend/node_modules
