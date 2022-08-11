@@ -11,3 +11,34 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.navbar {
+  box-shadow: 0 0 5px 1px rgba(180, 180, 180, 1);
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  border-radius: 3rem;
+  width: calc(100vw - 3rem);
+  height: 100px;
+  vertical-align: middle;
+}
+
+.img {
+  object-fit: contain !important;
+  width: 120px;
+}
+
+.link,
+.profile {
+  text-decoration: none;
+  color: rgba(100, 100, 100, 1);
+  font-size: 15pt;
+  transition: .2s ease;
+  text-align: center;
+}
+
+.profile {
+  font-size: 12pt;
+  color: rgba(100, 100, 100, .7);
+  font-weight: bold;
+}
