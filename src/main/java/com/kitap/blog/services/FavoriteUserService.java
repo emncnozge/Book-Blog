@@ -18,4 +18,32 @@ public class FavoriteUserService {
         return favoriteUserRepository.getFavoriteUsers(user_email);
     }
 
+    public boolean getFavoriteUser(String user_email, String favorite_user_email) {
+        return (favoriteUserRepository.getFavoriteUser(user_email, favorite_user_email).size() > 0);
+    }
+
+    public boolean addFavoriteUser(FavoriteUser favoriteUser) {
+        try {
+            favoriteUserRepository.saveAndFlush(favoriteUser);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    public boolean deleteFavoriteUser(Long id) {
+        try {
+            boolean exists = favoriteUserRepository.existsById(id);
+            if (exists) {
+                favoriteUserRepository.deleteById(id);
+                return true;
+            } else return false;
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
 }

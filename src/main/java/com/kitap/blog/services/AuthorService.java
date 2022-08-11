@@ -20,8 +20,8 @@ public class AuthorService {
         return authorRepository.findAll();
     }
 
-    public Author getAuthor(Long id) {
-        return authorRepository.findById(id)
+    public Author getAuthor(Long user_id) {
+        return authorRepository.findById(user_id)
                 .orElseThrow(() ->
                         new IllegalStateException("Error! Selected author doesn't exist."));
     }

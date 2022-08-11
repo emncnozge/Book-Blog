@@ -20,10 +20,10 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Book getBook(Long id) {
-        return bookRepository.findById(id)
+    public Book getBook(Long user_id) {
+        return bookRepository.findById(user_id)
                 .orElseThrow(() ->
-                new IllegalStateException("Error! Selected book doesn't exist."));
+                        new IllegalStateException("Error! Selected book doesn't exist."));
     }
 
     public boolean addBook(Book book) {

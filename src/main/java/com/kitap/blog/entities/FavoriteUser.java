@@ -1,34 +1,37 @@
 package com.kitap.blog.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import java.io.Serializable;
+import javax.persistence.*;
 
-
-class FavoriteUserKey implements Serializable {
-    private String user_email;
-    private String favorite_user_email;
-}
 
 @Entity(name = "favorite_user")
-@IdClass(FavoriteUserKey.class)
 public class FavoriteUser {
     @Id
+    @SequenceGenerator(name = "favorite_user_sequence", sequenceName = "favorite_user_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "favorite_user_sequence")
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     @Column(name = "user_email", nullable = false)
     private String user_email;
 
-    @Id
     @Column(name = "favorite_user_email", nullable = false)
     private String favorite_user_email;
 
     public FavoriteUser() {
     }
 
-    public FavoriteUser(String user_email, String favorite_user_email) {
+    public FavoriteUser(Long id, String user_email, String favorite_user_email) {
+        this.id = id;
         this.user_email = user_email;
         this.favorite_user_email = favorite_user_email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUser_email() {
@@ -50,7 +53,8 @@ public class FavoriteUser {
     @Override
     public String toString() {
         return "FavoriteUser{" +
-                "user_email='" + user_email + '\'' +
+                "id='" + id + '\'' +
+                ", user_email='" + user_email + '\'' +
                 ", favorite_user_email='" + favorite_user_email + '\'' +
                 '}';
     }

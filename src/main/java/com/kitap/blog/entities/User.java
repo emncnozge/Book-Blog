@@ -5,10 +5,15 @@ import javax.persistence.*;
 @Entity(name = "user")
 public class User {
     @Id
-    @Column(name = "email", updatable = false)
+    @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+    @Column(name = "user_id", updatable = false)
+    private String user_id;
+
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password", updatable = false)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "name", nullable = false)
@@ -22,8 +27,12 @@ public class User {
 
     @Column(name = "is_admin", nullable = false)
     private boolean is_admin;
-    
-    public User(String email, String password, String name, String about, String photo_url, boolean is_admin) {
+
+    public User() {
+    }
+
+    public User(String user_id, String email, String password, String name, String about, String photo_url, boolean is_admin) {
+        this.user_id = user_id;
         this.email = email;
         this.password = password;
         this.name = name;
@@ -32,7 +41,12 @@ public class User {
         this.is_admin = is_admin;
     }
 
-    public User() {
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getEmail() {
@@ -75,7 +89,7 @@ public class User {
         this.photo_url = photo_url;
     }
 
-    public boolean getIs_admin() {
+    public boolean isIs_admin() {
         return is_admin;
     }
 
@@ -86,12 +100,13 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "email='" + email + '\'' +
+                "user_id='" + user_id + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", about='" + about + '\'' +
                 ", photo_url='" + photo_url + '\'' +
-                ", is_admin='" + is_admin + '\'' +
+                ", is_admin=" + is_admin +
                 '}';
     }
 }

@@ -20,8 +20,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUser(String email) {
-        return userRepository.findById(email)
+    public User getUser(Long user_id) {
+        return userRepository.findById(user_id)
                 .orElseThrow(() -> new IllegalStateException("Error! Selected user doesn't exist."));
     }
 
@@ -35,11 +35,11 @@ public class UserService {
         }
     }
 
-    public boolean deleteUser(String email) {
+    public boolean deleteUser(Long user_id) {
         try {
-            boolean exists = userRepository.existsById(email);
+            boolean exists = userRepository.existsById(user_id);
             if (exists) {
-                userRepository.deleteById(email);
+                userRepository.deleteById(user_id);
                 return true;
             } else
                 return false;
@@ -51,10 +51,13 @@ public class UserService {
     }
 
     @Transactional
-    public boolean updateUser(String email, String name, String password, String about, String photo_url) {
-        boolean exists = userRepository.existsById(email);
+    public boolean updateUser(Long user_id, String email, String name, String password, String about, String photo_url) {
+        boolean exists = userRepository.existsById(user_id);
         if (exists) {
-            User user = userRepository.findById(email).orElseThrow(() -> new IllegalStateException("Error"));
+            User user = userRepository.findById(user_id).orElseThrow(() -> new IllegalStateException("Error"));
+            if (email != null && email.length() > 0 && !Objects.equals(user.getEmail(), email)) {
+                user.setEmail(email);
+            }
             if (name != null && name.length() > 0 && !Objects.equals(user.getName(), name)) {
                 user.setName(name);
             }
@@ -64,11 +67,8 @@ public class UserService {
             if (about != null && about.length() > 0 && !Objects.equals(user.getAbout(), about)) {
                 user.setAbout(about);
             }
-            System.out.println(photo_url);
-
             if (photo_url != null && photo_url.length() > 0 && !Objects.equals(user.getPhoto_url(), photo_url)) {
                 user.setPhoto_url(photo_url);
-                System.out.println("girdi");
             }
             return true;
         } else

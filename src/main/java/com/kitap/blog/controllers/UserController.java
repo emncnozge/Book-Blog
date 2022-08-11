@@ -24,9 +24,9 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping(path = "{email}")
-    public User getUser(@PathVariable("email") String email) {
-        return userService.getUser(email);
+    @GetMapping(path = "{user_id}")
+    public User getUser(@PathVariable("user_id") Long user_id) {
+        return userService.getUser(user_id);
     }
 
     @PostMapping
@@ -34,18 +34,19 @@ public class UserController {
         return userService.addUser(user);
     }
 
-    @DeleteMapping(path = "{email}")
-    public boolean deleteUser(@PathVariable("email") String email) {
-        return userService.deleteUser(email);
+    @DeleteMapping(path = "{user_id}")
+    public boolean deleteUser(@PathVariable("user_id") Long user_id) {
+        return userService.deleteUser(user_id);
     }
 
     @PutMapping(path = "{user_id}")
     public boolean updateUser(
-            @PathVariable("user_id") String email,
+            @PathVariable("user_id") Long user_id,
+            @RequestParam(required = false) String email,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String password,
             @RequestParam(required = false) String about,
             @RequestParam(required = false) String photo_url) {
-        return userService.updateUser(email, name, password, about, photo_url);
+        return userService.updateUser(user_id, email, name, password, about, photo_url);
     }
 }
