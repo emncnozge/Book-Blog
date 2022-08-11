@@ -2,8 +2,13 @@ package com.kitap.blog.repositories;
 
 import com.kitap.blog.entities.FavoriteUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface FavoriteUserRepository extends JpaRepository<FavoriteUser, String> {
+    @Query("FROM favorite_user fu WHERE fu.user_email = :user_email")
+    List<FavoriteUser> getFavoriteUsers(String user_email);
 }

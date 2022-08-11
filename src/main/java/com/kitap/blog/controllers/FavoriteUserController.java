@@ -24,7 +24,6 @@ public class FavoriteUserController {
 
     @GetMapping
     public List<FavoriteUser> getFavoriteUsers(@RequestParam(required = false) String user_email) {
-        System.out.println("girdi");
         return favoriteUserService.getFavoriteUsers(user_email);
     }
 
