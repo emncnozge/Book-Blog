@@ -3,97 +3,55 @@ package com.kitap.blog.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import java.io.Serializable;
 
-@Entity(name = "user")
+
+class FavoriteUserKey implements Serializable {
+    private String user_email;
+    private String favorite_user_email;
+}
+
+@Entity(name = "favorite_user")
+@IdClass(FavoriteUserKey.class)
 public class FavoriteUser {
     @Id
-    @Column(name = "email", updatable = false)
-    private String email;
+    @Column(name = "user_email", nullable = false)
+    private String user_email;
 
-    @Column(name = "password", updatable = false)
-    private String password;
-
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "about", nullable = false)
-    private String about;
-
-    @Column(name = "photo_url")
-    private String photo_url;
-
-    @Column(name = "is_admin", nullable = false)
-    private boolean is_admin;
-
-    public FavoriteUser(String email, String password, String name, String about, String photo_url, boolean is_admin) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.about = about;
-        this.photo_url = photo_url;
-        this.is_admin = is_admin;
-    }
+    @Id
+    @Column(name = "favorite_user_email", nullable = false)
+    private String favorite_user_email;
 
     public FavoriteUser() {
     }
 
-    public String getEmail() {
-        return email;
+    public FavoriteUser(String user_email, String favorite_user_email) {
+        this.user_email = user_email;
+        this.favorite_user_email = favorite_user_email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getUser_email() {
+        return user_email;
     }
 
-    public String getPassword() {
-        return password;
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getFavorite_user_email() {
+        return favorite_user_email;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAbout() {
-        return about;
-    }
-
-    public void setAbout(String about) {
-        this.about = about;
-    }
-
-    public String getPhoto_url() {
-        return photo_url;
-    }
-
-    public void setPhoto_url(String photo_url) {
-        this.photo_url = photo_url;
-    }
-
-    public boolean getIs_admin() {
-        return is_admin;
-    }
-
-    public void setIs_admin(boolean is_admin) {
-        this.is_admin = is_admin;
+    public void setFavorite_user_email(String favorite_user_email) {
+        this.favorite_user_email = favorite_user_email;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", about='" + about + '\'' +
-                ", photo_url='" + photo_url + '\'' +
-                ", is_admin='" + is_admin + '\'' +
+        return "FavoriteUser{" +
+                "user_email='" + user_email + '\'' +
+                ", favorite_user_email='" + favorite_user_email + '\'' +
                 '}';
     }
 }
