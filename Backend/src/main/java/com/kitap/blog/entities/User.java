@@ -1,6 +1,10 @@
 package com.kitap.blog.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity(name = "user")
 public class User {
@@ -28,10 +32,16 @@ public class User {
     @Column(name = "is_admin", nullable = false)
     private boolean is_admin;
 
+    @CreationTimestamp
+    private Date createdOn;
+
+    @UpdateTimestamp
+    private Date updatedOn;
+
     public User() {
     }
 
-    public User(Long user_id, String email, String password, String name, String about, String photo_url, boolean is_admin) {
+    public User(Long user_id, String email, String password, String name, String about, String photo_url, boolean is_admin, Date createdOn, Date updatedOn) {
         this.user_id = user_id;
         this.email = email;
         this.password = password;
@@ -39,6 +49,8 @@ public class User {
         this.about = about;
         this.photo_url = photo_url;
         this.is_admin = is_admin;
+        this.createdOn = createdOn;
+        this.updatedOn = updatedOn;
     }
 
     public Long getUser_id() {
@@ -97,16 +109,34 @@ public class User {
         this.is_admin = is_admin;
     }
 
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Date getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "user_id='" + user_id + '\'' +
+                "user_id=" + user_id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", about='" + about + '\'' +
                 ", photo_url='" + photo_url + '\'' +
                 ", is_admin=" + is_admin +
+                ", createdOn=" + createdOn +
+                ", updatedOn=" + updatedOn +
                 '}';
     }
 }

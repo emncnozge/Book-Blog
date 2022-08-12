@@ -1,6 +1,10 @@
 package com.kitap.blog.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity(name = "author")
 public class Author {
@@ -18,14 +22,23 @@ public class Author {
     @Column(name = "photo_url")
     private String photo_url;
 
-    public Author(Long author_id, String name, String about, String photo_url) {
+    @CreationTimestamp
+    private Date createdOn;
+
+    @UpdateTimestamp
+    private Date updatedOn;
+
+
+    public Author() {
+    }
+
+    public Author(Long author_id, String name, String about, String photo_url, Date createdOn, Date updatedOn) {
         this.author_id = author_id;
         this.name = name;
         this.about = about;
         this.photo_url = photo_url;
-    }
-
-    public Author() {
+        this.createdOn = createdOn;
+        this.updatedOn = updatedOn;
     }
 
     public Long getAuthor_id() {
@@ -60,6 +73,22 @@ public class Author {
         this.photo_url = photo_url;
     }
 
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Date getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
     @Override
     public String toString() {
         return "Author{" +
@@ -67,7 +96,8 @@ public class Author {
                 ", name='" + name + '\'' +
                 ", about='" + about + '\'' +
                 ", photo_url='" + photo_url + '\'' +
+                ", createdOn=" + createdOn +
+                ", updatedOn=" + updatedOn +
                 '}';
     }
-
 }

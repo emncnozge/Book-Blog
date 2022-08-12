@@ -3,8 +3,14 @@ package com.kitap.blog.services;
 import com.kitap.blog.entities.Book;
 import com.kitap.blog.repositories.BookRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +24,10 @@ public class BookService {
 
     public List<Book> getBooks() {
         return bookRepository.findAll();
+    }
+
+    public List<Book> getLast20Books() {
+        return bookRepository.findTop20ByOrderByCreatedOnDesc();
     }
 
     public Book getBook(Long user_id) {
@@ -71,7 +81,32 @@ public class BookService {
             }
             return true;
         } else return false;
+    }
 
+    @Transactional
+    public boolean addBookPhoto(Long book_id, MultipartFile multipartFile) throws IOException {
+        boolean exists = bookRepository.existsById(book_id);
+        if (exists) {
+            Book book = bookRepository.findById(book_id).orElseThrow(() -> new IllegalStateException("Error"));
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            String uploadDir = "images/book-photos/" + book_id;
+            book.setPhoto_url(uploadDir + "/" + fileName);
 
+            byte[] bytes = multipartFile.getBytes();
+
+            File dir = new File(uploadDir);
+            System.out.println(dir.getAbsolutePath());
+            if (!dir.exists())
+                dir.mkdirs();
+
+            File serverFile = new File(dir.getAbsolutePath()
+                    + File.separator + fileName);
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(serverFile));
+            stream.write(bytes);
+            stream.close();
+
+            return true;
+        } else return false;
     }
 }

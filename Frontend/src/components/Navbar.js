@@ -1,17 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Logo from "../logo.svg";
+import Logo from "../img/logo.png";
 import { PersonCircle } from "react-bootstrap-icons";
+
 export default function Navbar() {
   return (
     <>
-      <div className="navbar">
+      <div className="navbar mb-4">
         <div className="row w-100">
           <div className="d-none d-sm-block col-2 col-lg-1 my-auto">
             <img src={Logo} className="img" alt="foto" />
           </div>
-          <div className="col-9 col-sm-7 col-md-8 col-lg-4 d-flex my-auto justify-content-around">
-            <Link to="/" className="link">
+          <div className="col-9 col-sm-6 col-lg-4 d-flex my-auto justify-content-around">
+            <Link to="/books" className="link">
               Kitaplar
             </Link>
             <Link to="/" className="link">
@@ -35,8 +36,8 @@ export default function Navbar() {
                 float: "right",
               }}
             >
-              <span className="d-none d-lg-inline me-2">Emin Can ÖZGE</span>
-              <PersonCircle size={50} color="#999"></PersonCircle>
+              <span className="d-none d-md-inline me-2">Emin Can ÖZGE</span>
+              <PersonCircle size={46} color="#999"></PersonCircle>
             </div>
           </div>
         </div>

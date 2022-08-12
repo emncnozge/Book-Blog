@@ -1,9 +1,9 @@
-import Navbar from "./components/Navbar";
+import MainPage from "./pages/MainPage";
 
 function App() {
   return (
     <>
-      <Navbar></Navbar>
+      <MainPage></MainPage>
     </>
   );
 }
