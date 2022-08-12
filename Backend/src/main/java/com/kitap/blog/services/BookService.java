@@ -2,15 +2,17 @@ package com.kitap.blog.services;
 
 import com.kitap.blog.entities.Book;
 import com.kitap.blog.repositories.BookRepository;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 
@@ -108,5 +110,16 @@ public class BookService {
 
             return true;
         } else return false;
+    }
+
+    public InputStreamResource getBookPhoto(Long book_id, HttpServletResponse response) throws IOException {
+        boolean exists = bookRepository.existsById(book_id);
+        if (exists) {
+            Book book = bookRepository.findById(book_id).orElseThrow(() -> new IllegalStateException("Error"));
+            Resource resource1 = new ClassPathResource("/book-photos/"+book_id+"/"+book.getPhoto_url());
+            response.setContentType("image/jpeg");
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(resource1.getFile()));
+            return resource;
+        } else return null;
     }
 }

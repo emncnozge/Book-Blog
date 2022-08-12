@@ -5,6 +5,7 @@ import { BookFill } from "react-bootstrap-icons";
 export default function MainPage() {
   const axios = require("axios");
   const [books, setBooks] = useState([]);
+  const [photo, setPhoto] = useState("");
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/book/last20")
@@ -20,7 +21,7 @@ export default function MainPage() {
             action="http://localhost:8080/api/book/photo"
             object="{user}"
             method="post"
-            enctype="multipart/form-data"
+            encType="multipart/form-data"
           >
             <div>
               <label>Photos: </label>
@@ -30,24 +31,27 @@ export default function MainPage() {
           </form>
           {books?.map((book) => {
             return (
-              <>
-                <div className="col-12 col-sm-6 col-md-4 col-lg-3">
-                  <Link to={book.book_id} className="book">
-                    <div className="card">
-                      <div
-                        className="card-img-top mt-3"
-                        style={{ border: "1px solid black", height: "250px" }}
-                      >
-                        <BookFill size={160} />
-                      </div>
-
-                      <div className="card-body">
-                        <h5 className="card-title">{book.name}</h5>
-                      </div>
+              <div
+                key={book.book_id}
+                className="col-12 col-sm-6 col-md-4 col-lg-3"
+              >
+                <Link to={book.book_id} className="book">
+                  <div className="card">
+                    <div className="card-img-top mt-3">
+                      <img
+                        src={
+                          "http://localhost:8080/api/book/photo/" + book.book_id
+                        }
+                        className="image"
+                      />
                     </div>
-                  </Link>
-                </div>
-              </>
+
+                    <div className="card-body">
+                      <h5 className="card-title">{book.name}</h5>
+                    </div>
+                  </div>
+                </Link>
+              </div>
             );
           })}
         </div>

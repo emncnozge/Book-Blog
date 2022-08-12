@@ -73,3 +73,7 @@ code {
 .book:hover {
   color: #333;
 }
+
+.image {
+  object-fit: cover !important;
+}
