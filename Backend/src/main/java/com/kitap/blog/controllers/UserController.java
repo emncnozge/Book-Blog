@@ -5,7 +5,9 @@ import com.kitap.blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/user")
@@ -19,34 +21,54 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public List<User> getUsers() {
-        return userService.getUsers();
+
+    @PostMapping("/login")
+    public boolean login(@RequestBody Map<String, Object> body) throws NoSuchAlgorithmException {
+        return userService.login(body.get("email").toString(),
+                body.get("password").toString(),
+                body.get("token").toString());
     }
 
-    @GetMapping(path = "{user_id}")
-    public User getUser(@PathVariable("user_id") Long user_id) {
-        return userService.getUser(user_id);
+    @PostMapping("/getUsers")
+    public List<User> getUsers(@RequestBody Map<String, Object> body) {
+        return userService.getUsers(body.get("token").toString());
     }
 
-    @PostMapping
-    public boolean addUser(@RequestBody User user) {
-        return userService.addUser(user);
+    @PostMapping("/getUser")
+    public User getUser(@RequestBody Map<String, Object> body) {
+        return userService.getUser(Long.parseLong(body.get("user_id").toString()),
+                body.get("token").toString());
     }
 
-    @DeleteMapping(path = "{user_id}")
-    public boolean deleteUser(@PathVariable("user_id") Long user_id) {
-        return userService.deleteUser(user_id);
+    @PostMapping("/addUser")
+    public boolean addUser(@RequestBody Map<String, Object> body) throws NoSuchAlgorithmException {
+        User user = new User();
+        user.setEmail(body.get("email").toString());
+        user.setPassword(body.get("password").toString());
+        user.setName(body.get("name").toString());
+        user.setAbout(body.get("about").toString());
+        user.setPhoto_url(body.get("photo_url").toString());
+        user.setIs_admin(Boolean.parseBoolean(body.get("is_admin").toString()));
+
+        return userService.addUser(user, body.get("token").toString());
     }
 
-    @PutMapping(path = "{user_id}")
-    public boolean updateUser(
-            @PathVariable("user_id") Long user_id,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String password,
-            @RequestParam(required = false) String about,
-            @RequestParam(required = false) String photo_url) {
-        return userService.updateUser(user_id, email, name, password, about, photo_url);
+    @DeleteMapping("/deleteUser")
+    public boolean deleteUser(@RequestBody Map<String, Object> body) {
+        return userService.deleteUser(Long.parseLong(body.get("user_id").toString()), body.get("token").toString());
+    }
+
+    @PutMapping("/updateUser")
+    public boolean updateUser(@RequestBody Map<String, Object> body) {
+        return userService.updateUser(
+                Long.parseLong(body.get("user_id").toString()),
+                body.get("email").toString(),
+                body.get("name").toString(),
+                body.get("password").toString(),
+                body.get("about").toString(),
+                body.get("photo_url").toString(),
+                Boolean.parseBoolean(body.get("isAdmin").toString()),
+                body.get("token").toString()
+        );
     }
 }
