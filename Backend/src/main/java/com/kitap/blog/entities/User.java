@@ -101,7 +101,7 @@ public class User {
         this.photo_url = photo_url;
     }
 
-    public boolean isIs_admin() {
+    public boolean getIs_admin() {
         return is_admin;
     }
 

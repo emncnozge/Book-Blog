@@ -33,16 +33,20 @@ public class UserService {
     }
 
     public List<User> getUsers(String token) {
-        return userRepository.findAll();
+        if (token.equals(appToken)) {
+            return userRepository.findAll();
+        } else return null;
     }
 
     public User getUser(Long user_id, String token) {
-        return userRepository.findById(user_id)
-                .orElseThrow(() -> new IllegalStateException("Error! Selected user doesn't exist."));
+        if (token.equals(appToken)) {
+            return userRepository.findById(user_id)
+                    .orElseThrow(() -> new IllegalStateException("Error! Selected user doesn't exist."));
+        } else return null;
     }
 
     public boolean addUser(User user, String token) throws NoSuchAlgorithmException {
-        if (!userRepository.existsByEmail(user.getEmail())) {
+        if (!userRepository.existsByEmail(user.getEmail()) && token.equals(appToken)) {
             MessageDigest digest = MessageDigest.getInstance("SHA3-256");
             byte[] hashedPassword = digest.digest(
                     user.getPassword().getBytes(StandardCharsets.UTF_8));
@@ -53,7 +57,7 @@ public class UserService {
     }
 
     public boolean deleteUser(Long user_id, String token) {
-        try {
+        if (token.equals(appToken)) {
             boolean exists = userRepository.existsById(user_id);
             if (exists) {
                 userRepository.deleteById(user_id);
@@ -61,10 +65,7 @@ public class UserService {
             } else
                 return false;
 
-        } catch (Exception e) {
-            System.out.println("Hata!");
-            return false;
-        }
+        } else return false;
     }
 
     @Transactional
@@ -72,6 +73,11 @@ public class UserService {
         if (token.equals(appToken)) {
             boolean exists = userRepository.existsById(user_id);
             if (exists) {
+                if (email.equals("null")) email = null;
+                if (name.equals("null")) name = null;
+                if (password.equals("null")) password = null;
+                if (about.equals("null")) about = null;
+                if (photo_url.equals("null")) photo_url = null;
                 User user = userRepository.findById(user_id).orElseThrow(() -> new IllegalStateException("Error"));
                 if (email != null && email.length() > 0 && !Objects.equals(user.getEmail(), email)) {
                     user.setEmail(email);
@@ -88,11 +94,13 @@ public class UserService {
                 if (photo_url != null && photo_url.length() > 0 && !Objects.equals(user.getPhoto_url(), photo_url)) {
                     user.setPhoto_url(photo_url);
                 }
+                if (!Objects.equals(user.getIs_admin(), isAdmin)) {
+                    user.setIs_admin(isAdmin);
+                }
                 return true;
             } else
                 return false;
         }
         return false;
-
     }
 }

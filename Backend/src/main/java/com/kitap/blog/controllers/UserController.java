@@ -24,51 +24,51 @@ public class UserController {
 
     @PostMapping("/login")
     public boolean login(@RequestBody Map<String, Object> body) throws NoSuchAlgorithmException {
-        return userService.login(body.get("email").toString(),
-                body.get("password").toString(),
-                body.get("token").toString());
+        return userService.login(String.valueOf(body.get("email")),
+                String.valueOf(body.get("password")),
+                String.valueOf(body.get("token")));
     }
 
     @PostMapping("/getUsers")
     public List<User> getUsers(@RequestBody Map<String, Object> body) {
-        return userService.getUsers(body.get("token").toString());
+        return userService.getUsers(String.valueOf(body.get("token")));
     }
 
     @PostMapping("/getUser")
     public User getUser(@RequestBody Map<String, Object> body) {
-        return userService.getUser(Long.parseLong(body.get("user_id").toString()),
-                body.get("token").toString());
+        return userService.getUser(Long.parseLong(String.valueOf(body.get("user_id"))),
+                String.valueOf(body.get("token")));
     }
 
     @PostMapping("/addUser")
     public boolean addUser(@RequestBody Map<String, Object> body) throws NoSuchAlgorithmException {
         User user = new User();
-        user.setEmail(body.get("email").toString());
-        user.setPassword(body.get("password").toString());
-        user.setName(body.get("name").toString());
-        user.setAbout(body.get("about").toString());
-        user.setPhoto_url(body.get("photo_url").toString());
-        user.setIs_admin(Boolean.parseBoolean(body.get("is_admin").toString()));
+        user.setEmail(String.valueOf(body.get("email")));
+        user.setPassword(String.valueOf(body.get("password")));
+        user.setName(String.valueOf(body.get("name")));
+        user.setAbout(String.valueOf(body.get("about")));
+        user.setPhoto_url(String.valueOf(body.get("photo_url")));
+        user.setIs_admin(Boolean.parseBoolean(String.valueOf(body.get("is_admin"))));
 
-        return userService.addUser(user, body.get("token").toString());
+        return userService.addUser(user, String.valueOf(body.get("token")));
     }
 
     @DeleteMapping("/deleteUser")
     public boolean deleteUser(@RequestBody Map<String, Object> body) {
-        return userService.deleteUser(Long.parseLong(body.get("user_id").toString()), body.get("token").toString());
+        return userService.deleteUser(Long.valueOf(String.valueOf(body.get("user_id"))), String.valueOf(body.get("token")));
     }
 
     @PutMapping("/updateUser")
     public boolean updateUser(@RequestBody Map<String, Object> body) {
         return userService.updateUser(
-                Long.parseLong(body.get("user_id").toString()),
-                body.get("email").toString(),
-                body.get("name").toString(),
-                body.get("password").toString(),
-                body.get("about").toString(),
-                body.get("photo_url").toString(),
-                Boolean.parseBoolean(body.get("isAdmin").toString()),
-                body.get("token").toString()
+                Long.valueOf(String.valueOf(body.get("user_id"))),
+                String.valueOf(body.get("email")),
+                String.valueOf(body.get("name")),
+                String.valueOf(body.get("password")),
+                String.valueOf(body.get("about")),
+                String.valueOf(body.get("photo_url")),
+                Boolean.valueOf(String.valueOf(body.get("isAdmin"))),
+                String.valueOf(body.get("token"))
         );
     }
 }
