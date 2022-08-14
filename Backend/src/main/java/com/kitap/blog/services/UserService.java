@@ -22,7 +22,9 @@ public class UserService {
     }
 
     public boolean login(String email, String password, String token) throws NoSuchAlgorithmException {
+        if(userRepository.existsByEmail(email)){
         User user = userRepository.getUserByEmail(email);
+
         if (userRepository.existsById(user.getUser_id()) && token.equals(appToken)) {
             MessageDigest digest = MessageDigest.getInstance("SHA3-256");
             byte[] hashedPassword = digest.digest(
@@ -30,7 +32,7 @@ public class UserService {
             return Base64.getEncoder().encodeToString(hashedPassword).equals(user.getPassword());
         }
         return false;
-    }
+    }else return false;}
 
     public List<User> getUsers(String token) {
         if (token.equals(appToken)) {

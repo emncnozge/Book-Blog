@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+import Login from "./pages/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
@@ -11,7 +11,7 @@ root.render(
   <Router>
     <Routes>
       <Route path="/" element={<MainPage />} />
-      {/* <Route path="/books" element={<Book />} /> */}
+      <Route path="/login" element={<Login />} />
     </Routes>
   </Router>
 );

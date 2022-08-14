@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import { BookFill } from "react-bootstrap-icons";
 export default function MainPage() {
-  const axios = require("axios");
   const [books, setBooks] = useState([]);
-  const [photo, setPhoto] = useState("");
   useEffect(() => {
+    const axios = require("axios");
+
     axios
       .get("http://localhost:8080/api/book/last20")
       .then((response) => response.data)
@@ -39,6 +38,7 @@ export default function MainPage() {
                   <div className="card">
                     <div className="card-img-top mt-3">
                       <img
+                        alt="book_photo"
                         src={
                           "http://localhost:8080/api/book/photo/" + book.book_id
                         }

@@ -77,3 +77,33 @@ code {
 .image {
   object-fit: cover !important;
 }
+
+.login {
+  height: 100vh !important;
+}
+
+.loginCard {
+  padding: 2rem;
+  box-shadow: 0 0 5px 5px #eee;
+  border-radius: 1rem;
+}
+
+.register {
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.logo {
+  transition: .2s ease;
+  margin: 10px;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
