@@ -32,8 +32,20 @@ export default function Navbar() {
           password: password,
           token: "Izgg1AUtqtyzwEWxQcRIxm2rBSXPXxRv",
         })
-        .then(function (response) {
-          if (response.data) {
+        .then(async (response) => {
+          if (typeof response.data !== String && response.data !== 0) {
+            await axios
+              .post("/api/user/getUser", {
+                user_id: response.data,
+                token: "Izgg1AUtqtyzwEWxQcRIxm2rBSXPXxRv",
+              })
+              .then(function (response) {
+                window.localStorage.setItem("user_id", response.data.user_id);
+                window.localStorage.setItem("name", response.data.name);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
             navigate("/");
           } else {
             setBackendError(true);

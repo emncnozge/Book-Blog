@@ -23,7 +23,7 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public boolean login(@RequestBody Map<String, Object> body) throws NoSuchAlgorithmException {
+    public Long login(@RequestBody Map<String, Object> body) throws NoSuchAlgorithmException {
         return userService.login(String.valueOf(body.get("email")),
                 String.valueOf(body.get("password")),
                 String.valueOf(body.get("token")));

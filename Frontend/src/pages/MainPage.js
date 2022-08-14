@@ -3,30 +3,41 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 export default function MainPage() {
   const [books, setBooks] = useState([]);
+  const [user_id, setUser_id] = useState(0);
+  const [name, setName] = useState("");
+  const [photo, setPhoto] = useState();
+  const handlePhoto = (e) => {
+    setPhoto(e.target.files[0]);
+  };
+  const changePhoto = () => {
+    const axios = require("axios");
+    axios.post("http://localhost:8080/api/book/photo", photo);
+  };
   useEffect(() => {
     const axios = require("axios");
-
     axios
       .get("http://localhost:8080/api/book/last20")
       .then((response) => response.data)
       .then((data) => setBooks(data));
+    setUser_id(window.localStorage.getItem("user_id"));
+    setName(window.localStorage.getItem("name"));
   }, []);
   return (
     <>
       <Navbar />
       <div className="container-fluid">
         <div className="row">
-          <form
-            action="http://localhost:8080/api/book/photo"
-            object="{user}"
-            method="post"
-            encType="multipart/form-data"
-          >
+          <form object="{user}" method="post" encType="multipart/form-data">
             <div>
               <label>Photos: </label>
-              <input type="file" name="image" accept="image/png, image/jpeg" />
+              <input
+                type="file"
+                name="image"
+                accept="image/png"
+                onChange={handlePhoto}
+              />
             </div>
-            <input type="submit" value="Upload" />
+            <input type="button" onClick={changePhoto} value="Upload" />
           </form>
           {books?.map((book) => {
             return (

@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../img/logo.png";
 import { PersonCircle } from "react-bootstrap-icons";
 
 export default function Navbar() {
+  const [name, setName] = useState("");
+  useEffect(() => {
+    setName(window.localStorage.getItem("name"));
+  }, []);
+
   return (
     <>
       <div className="navbar mb-4">
@@ -36,7 +41,7 @@ export default function Navbar() {
                 float: "right",
               }}
             >
-              <span className="d-none d-md-inline me-2">Emin Can ÖZGE</span>
+              <span className="d-none d-md-inline me-2">{name}</span>
               <PersonCircle size={46} color="#999"></PersonCircle>
             </div>
           </div>

@@ -21,18 +21,20 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public boolean login(String email, String password, String token) throws NoSuchAlgorithmException {
-        if(userRepository.existsByEmail(email)){
-        User user = userRepository.getUserByEmail(email);
+    public Long login(String email, String password, String token) throws NoSuchAlgorithmException {
+        if (userRepository.existsByEmail(email)) {
+            User user = userRepository.getUserByEmail(email);
 
-        if (userRepository.existsById(user.getUser_id()) && token.equals(appToken)) {
-            MessageDigest digest = MessageDigest.getInstance("SHA3-256");
-            byte[] hashedPassword = digest.digest(
-                    password.getBytes(StandardCharsets.UTF_8));
-            return Base64.getEncoder().encodeToString(hashedPassword).equals(user.getPassword());
+            if (userRepository.existsById(user.getUser_id()) && token.equals(appToken)) {
+                MessageDigest digest = MessageDigest.getInstance("SHA3-256");
+                byte[] hashedPassword = digest.digest(
+                        password.getBytes(StandardCharsets.UTF_8));
+                if (Base64.getEncoder().encodeToString(hashedPassword).equals(user.getPassword()))
+                    return user.getUser_id();
+            }
         }
-        return false;
-    }else return false;}
+        return 0L;
+    }
 
     public List<User> getUsers(String token) {
         if (token.equals(appToken)) {
