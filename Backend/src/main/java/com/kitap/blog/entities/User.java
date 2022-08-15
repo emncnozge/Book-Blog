@@ -14,22 +14,22 @@ public class User {
     @Column(name = "user_id", updatable = false)
     private Long user_id;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "about", nullable = false)
+    @Column(name = "about", columnDefinition = "TEXT")
     private String about;
 
-    @Column(name = "photo_url")
+    @Column(name = "photo_url", columnDefinition = "TEXT")
     private String photo_url;
 
-    @Column(name = "is_admin", nullable = false)
+    @Column(name = "is_admin", nullable = false, columnDefinition = "BIT default 0")
     private boolean is_admin;
 
     @CreationTimestamp

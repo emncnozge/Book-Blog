@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping("/addUser")
-    public boolean addUser(@RequestBody Map<String, Object> body) throws NoSuchAlgorithmException {
+    public Long addUser(@RequestBody Map<String, Object> body) throws NoSuchAlgorithmException {
         User user = new User();
         user.setEmail(String.valueOf(body.get("email")));
         user.setPassword(String.valueOf(body.get("password")));

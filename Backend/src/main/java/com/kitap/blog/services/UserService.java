@@ -49,15 +49,17 @@ public class UserService {
         } else return null;
     }
 
-    public boolean addUser(User user, String token) throws NoSuchAlgorithmException {
+    public Long addUser(User user, String token) throws NoSuchAlgorithmException {
         if (!userRepository.existsByEmail(user.getEmail()) && token.equals(appToken)) {
             MessageDigest digest = MessageDigest.getInstance("SHA3-256");
             byte[] hashedPassword = digest.digest(
                     user.getPassword().getBytes(StandardCharsets.UTF_8));
             user.setPassword(Base64.getEncoder().encodeToString(hashedPassword));
+            user.setAbout("");
+            user.setPhoto_url("");
             userRepository.saveAndFlush(user);
-            return true;
-        } else return false;
+            return user.getUser_id();
+        } else return 0L;
     }
 
     public boolean deleteUser(Long user_id, String token) {
