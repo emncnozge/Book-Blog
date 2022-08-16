@@ -4,35 +4,18 @@ import Navbar from "../components/Navbar";
 export default function MainPage() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
-  const [user_id, setUser_id] = useState(0);
-  const [name, setName] = useState("");
-  const [photo, setPhoto] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
-  const handlePhoto = (e) => {
-    setPhoto(e.target.files[0]);
-  };
-  const changePhoto = () => {
-    const axios = require("axios");
-    axios.post({
-      url: "http://localhost:8080/api/user/photo/",
-      data: { user_id: user_id, image: photo },
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-  };
+
   useEffect(() => {
     setLoggedIn(window.localStorage.getItem("loggedIn"));
     if (!window.localStorage.getItem("loggedIn"))
       navigate("login", { replace: true });
+
     const axios = require("axios");
     axios
-      .get("http://localhost:8080/api/book/last20")
+      .get("http://localhost:8080/api/book")
       .then((response) => response.data)
       .then((data) => setBooks(data));
-    setLoggedIn(window.localStorage.getItem("loggedIn"));
-    setUser_id(window.localStorage.getItem("user_id"));
-    setName(window.localStorage.getItem("name"));
   }, []);
   if (loggedIn)
     return (
@@ -40,29 +23,6 @@ export default function MainPage() {
         <Navbar />
         <div className="container-fluid">
           <div className="row">
-            <form
-              action="/api/user/photo"
-              object="{user}"
-              method="post"
-              encType="multipart/form-data"
-            >
-              <div>
-                <label>Photos: </label>
-                <input
-                  type="text"
-                  name="user_id"
-                  defaultValue={user_id}
-                  hidden
-                />
-                <input
-                  type="file"
-                  name="image"
-                  accept="image/png"
-                  onChange={handlePhoto}
-                />
-              </div>
-              <input type="submit" value="Upload" />
-            </form>
             {books?.map((book) => {
               return (
                 <div

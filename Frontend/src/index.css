@@ -23,6 +23,7 @@ code {
   width: calc(100vw - 3rem);
   height: 80px;
   vertical-align: middle;
+  z-index: 999999;
 }
 
 .img {
@@ -46,6 +47,15 @@ code {
   color: #FF5722;
   opacity: .9;
   font-weight: bold;
+  cursor: pointer;
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
 }
 
 .container-fluid {
@@ -64,18 +74,23 @@ code {
   transform: scale(1.05);
 }
 
-.book {
+.book,
+.author {
   text-decoration: none;
   margin-bottom: 1rem !important;
   color: #333;
 }
 
-.book:hover {
+.book:hover,
+.author:hover {
   color: #333;
 }
 
 .image {
-  object-fit: cover !important;
+  object-fit: contain !important;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 15%;
 }
 
 .login {
@@ -107,3 +122,36 @@ code {
   color: red;
   text-align: center;
 }
+
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdowncontent {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  right: 1rem
+}
+
+/* Links inside the dropdown */
+.dropdowncontent a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdowncontent a:hover {
+  background-color: #f1f1f1
+}
+
+
+
+/* Change the background color of the dropdown button when the dropdown content is shown */

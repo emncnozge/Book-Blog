@@ -52,12 +52,14 @@ export default function Navbar() {
               .then(function (response) {
                 window.localStorage.setItem("user_id", response.data.user_id);
                 window.localStorage.setItem("name", response.data.name);
+                window.localStorage.setItem("loggedIn", true);
               })
               .catch(function (error) {
                 console.log(error);
               });
-            navigate("/");
+            navigate("/", { replace: true });
           } else {
+            window.localStorage.setItem("loggedIn", false);
             setBackendError(true);
           }
         })
@@ -129,7 +131,7 @@ export default function Navbar() {
               <input
                 name="email"
                 type="email"
-                className="form-control form-control-lg mt-2 mb-3"
+                className="form-control form-control-lg  mt-2 mb-3"
                 placeholder="E-posta"
                 value={email}
                 onChange={handleEmail}
@@ -139,7 +141,7 @@ export default function Navbar() {
               <input
                 name="password"
                 type="password"
-                className="form-control form-control-lg mb-3"
+                className="form-control form-control-lg  mb-3"
                 placeholder="Şifre"
                 value={password}
                 onChange={handlePassword}
@@ -178,7 +180,7 @@ export default function Navbar() {
           <input
             name="email"
             type="email"
-            className="form-control form-control-lg mt-2 mb-3"
+            className="form-control form-control-lg  mt-2 mb-3"
             placeholder="E-posta"
             value={registerEmail}
             onChange={handleRegisterEmail}
@@ -188,7 +190,7 @@ export default function Navbar() {
           <input
             name="email"
             type="text"
-            className="form-control form-control-lg mt-2 mb-3"
+            className="form-control form-control-lg  mt-2 mb-3"
             placeholder="Ad Soyad"
             value={registerName}
             onChange={handleRegisterName}
@@ -197,7 +199,7 @@ export default function Navbar() {
           <input
             name="email"
             type="password"
-            className="form-control form-control-lg mt-2 mb-3"
+            className="form-control form-control-lg  mt-2 mb-3"
             placeholder="Şifre"
             value={registerPassword}
             onChange={handleRegisterPassword}

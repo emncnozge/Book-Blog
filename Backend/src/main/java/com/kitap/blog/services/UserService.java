@@ -2,9 +2,16 @@ package com.kitap.blog.services;
 
 import com.kitap.blog.entities.User;
 import com.kitap.blog.repositories.UserRepository;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.PathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -109,4 +116,49 @@ public class UserService {
         }
         return false;
     }
+
+    @Transactional
+    public boolean addUserPhoto(Long user_id, MultipartFile multipartFile) throws IOException {
+        boolean exists = userRepository.existsById(user_id);
+        if (exists) {
+            User user = userRepository.findById(user_id).orElseThrow(() -> new IllegalStateException("Error"));
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename() == null ? "" : multipartFile.getOriginalFilename());
+            String uploadDir = "images/user-photos/" + user_id;
+            user.setPhoto_url(uploadDir + "/" + fileName);
+
+            byte[] bytes = multipartFile.getBytes();
+
+            File dir = new File(uploadDir);
+            System.out.println(dir.getAbsolutePath());
+            if (!dir.exists())
+                dir.mkdirs();
+
+            File serverFile = new File(dir.getAbsolutePath()
+                    + File.separator + fileName);
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(serverFile));
+            stream.write(bytes);
+            stream.close();
+
+            return true;
+        } else return false;
+    }
+
+    public InputStreamResource getUserPhoto(Long user_id, HttpServletResponse response) throws IOException {
+        boolean exists = userRepository.existsById(user_id);
+        if (exists) {
+            User user = userRepository.findById(user_id).orElseThrow(() -> new IllegalStateException("Error"));
+            Resource resource1 = new PathResource(user.getPhoto_url());
+            response.setContentType("image/jpeg");
+            try {
+                return new InputStreamResource(new FileInputStream(resource1.getFile()));
+            } catch (Exception e) {
+                resource1 = new PathResource("images/user-photos/default.png");
+                response.setContentType("image/png");
+                return new InputStreamResource(new FileInputStream(resource1.getFile()));
+            }
+
+        } else return null;
+    }
+
 }
