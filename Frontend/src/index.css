@@ -152,6 +152,23 @@ code {
   background-color: #f1f1f1
 }
 
+.leftBar {
+  height: calc(100vh - 80px - 3rem) !important;
+}
 
+.underPhoto {
+  font-size: 15pt;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 1rem;
+}
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
+.label {
+  margin-right: 1rem !important;
+}
+
+.upload {
+  width: 100%;
+  margin-top: 1rem;
+  text-align: center;
+}

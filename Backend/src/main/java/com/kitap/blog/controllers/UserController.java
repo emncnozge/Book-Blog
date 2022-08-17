@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @PutMapping("/updateUser")
-    public boolean updateUser(@RequestBody Map<String, Object> body) {
+    public boolean updateUser(@RequestBody Map<String, Object> body) throws NoSuchAlgorithmException {
         return userService.updateUser(
                 Long.valueOf(String.valueOf(body.get("user_id"))),
                 String.valueOf(body.get("email")),
@@ -84,8 +84,8 @@ public class UserController {
 
 
     @PostMapping("/photo")
-    public boolean addUserPhoto(@RequestParam("user_id") Long user_id, @RequestParam("image") MultipartFile multipartFile) throws IOException {
-        return userService.addUserPhoto(user_id, multipartFile);
+    public void addUserPhoto(@RequestParam("user_id") Long user_id, @RequestParam("image") MultipartFile multipartFile,HttpServletResponse httpServletResponse) throws IOException {
+        userService.addUserPhoto(user_id, multipartFile, httpServletResponse);
     }
 
     @GetMapping(path = "/photo/{user_id}", produces = MediaType.IMAGE_PNG_VALUE)

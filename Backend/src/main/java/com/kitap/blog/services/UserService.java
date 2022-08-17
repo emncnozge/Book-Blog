@@ -82,7 +82,7 @@ public class UserService {
     }
 
     @Transactional
-    public boolean updateUser(Long user_id, String email, String name, String password, String about, String photo_url, boolean isAdmin, String token) {
+    public boolean updateUser(Long user_id, String email, String name, String password, String about, String photo_url, boolean isAdmin, String token) throws NoSuchAlgorithmException {
         if (token.equals(appToken)) {
             boolean exists = userRepository.existsById(user_id);
             if (exists) {
@@ -92,14 +92,17 @@ public class UserService {
                 if (about.equals("null")) about = null;
                 if (photo_url.equals("null")) photo_url = null;
                 User user = userRepository.findById(user_id).orElseThrow(() -> new IllegalStateException("Error"));
-                if (email != null && email.length() > 0 && !Objects.equals(user.getEmail(), email)) {
+                if (email != null && email.length() > 0 && !Objects.equals(user.getEmail(), email) && !userRepository.existsByEmail(email)) {
                     user.setEmail(email);
                 }
                 if (name != null && name.length() > 0 && !Objects.equals(user.getName(), name)) {
                     user.setName(name);
                 }
-                if (password != null && password.length() > 0 && !Objects.equals(user.getPassword(), password)) {
-                    user.setPassword(password);
+                if (password != null && password.length() > 0) {
+                    MessageDigest digest = MessageDigest.getInstance("SHA3-256");
+                    byte[] hashedPassword = digest.digest(
+                            password.getBytes(StandardCharsets.UTF_8));
+                    user.setPassword(Base64.getEncoder().encodeToString(hashedPassword));
                 }
                 if (about != null && about.length() > 0 && !Objects.equals(user.getAbout(), about)) {
                     user.setAbout(about);
@@ -118,7 +121,7 @@ public class UserService {
     }
 
     @Transactional
-    public boolean addUserPhoto(Long user_id, MultipartFile multipartFile) throws IOException {
+    public void addUserPhoto(Long user_id, MultipartFile multipartFile,HttpServletResponse httpServletResponse) throws IOException {
         boolean exists = userRepository.existsById(user_id);
         if (exists) {
             User user = userRepository.findById(user_id).orElseThrow(() -> new IllegalStateException("Error"));
@@ -140,8 +143,10 @@ public class UserService {
             stream.write(bytes);
             stream.close();
 
-            return true;
-        } else return false;
+
+        }
+
+        httpServletResponse.sendRedirect("http://localhost:3000/profile");
     }
 
     public InputStreamResource getUserPhoto(Long user_id, HttpServletResponse response) throws IOException {
