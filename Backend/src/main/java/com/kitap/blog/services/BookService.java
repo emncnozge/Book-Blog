@@ -65,6 +65,10 @@ public class BookService {
     public boolean updateBook(Long book_id, Long author_id, String name, String about, String photo_url) {
         boolean exists = bookRepository.existsById(book_id);
         if (exists) {
+            if (name.equals("null")) name = null;
+            if (String.valueOf(author_id).equals("null")) author_id = null;
+            if (about.equals("null")) about = null;
+            if (photo_url.equals("null")) photo_url = null;
             Book book = bookRepository.findById(book_id).orElseThrow(() -> new IllegalStateException("Error"));
             if (name != null && name.length() > 0 && !Objects.equals(book.getName(), name)) {
                 book.setName(name);
@@ -72,11 +76,11 @@ public class BookService {
             if (author_id != null && author_id > 0 && !Objects.equals(book.getAuthor_id(), author_id)) {
                 book.setAuthor_id(author_id);
             }
+            System.out.println(about + "hot");
             if (about != null && about.length() > 0 && !Objects.equals(book.getAbout(), about)) {
+                System.out.println("girdi" + about);
                 book.setAbout(about);
             }
-            System.out.println(photo_url);
-
             if (photo_url != null && photo_url.length() > 0 && !Objects.equals(book.getPhoto_url(), photo_url)) {
                 book.setPhoto_url(photo_url);
             }
@@ -85,18 +89,17 @@ public class BookService {
     }
 
     @Transactional
-    public boolean addBookPhoto(Long book_id, MultipartFile multipartFile) throws IOException {
+    public void addBookPhoto(Long book_id, MultipartFile multipartFile, HttpServletResponse httpServletResponse) throws IOException {
         boolean exists = bookRepository.existsById(book_id);
         if (exists) {
             Book book = bookRepository.findById(book_id).orElseThrow(() -> new IllegalStateException("Error"));
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename() == null ? "" : multipartFile.getOriginalFilename());
             String uploadDir = "images/book-photos/" + book_id;
             book.setPhoto_url(uploadDir + "/" + fileName);
 
             byte[] bytes = multipartFile.getBytes();
 
             File dir = new File(uploadDir);
-            System.out.println(dir.getAbsolutePath());
             if (!dir.exists())
                 dir.mkdirs();
 
@@ -106,9 +109,8 @@ public class BookService {
                     new FileOutputStream(serverFile));
             stream.write(bytes);
             stream.close();
-
-            return true;
-        } else return false;
+        }
+        httpServletResponse.sendRedirect("http://localhost:3000/book/" + book_id);
     }
 
     public InputStreamResource getBookPhoto(Long book_id, HttpServletResponse response) throws IOException {
@@ -116,15 +118,13 @@ public class BookService {
         if (exists) {
             Book book = bookRepository.findById(book_id).orElseThrow(() -> new IllegalStateException("Error"));
             Resource resource1 = new PathResource(book.getPhoto_url());
-            response.setContentType("image/png");
+            response.setContentType("image/jpeg");
             try {
-                InputStreamResource resource = new InputStreamResource(new FileInputStream(resource1.getFile()));
-                return resource;
+                return new InputStreamResource(new FileInputStream(resource1.getFile()));
             } catch (Exception e) {
                 resource1 = new PathResource("images/book-photos/default.png");
                 response.setContentType("image/png");
-                InputStreamResource resource = new InputStreamResource(new FileInputStream(resource1.getFile()));
-                return resource;
+                return new InputStreamResource(new FileInputStream(resource1.getFile()));
             }
 
         } else return null;

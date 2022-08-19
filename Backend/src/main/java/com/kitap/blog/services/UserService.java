@@ -107,7 +107,7 @@ public class UserService {
                 if (about != null && about.length() > 0 && !Objects.equals(user.getAbout(), about)) {
                     user.setAbout(about);
                 }
-                if (photo_url != null && photo_url.length() > 0 && !Objects.equals(user.getPhoto_url(), photo_url)) {
+                if (photo_url != null) {
                     user.setPhoto_url(photo_url);
                 }
                 if (!Objects.equals(user.getIs_admin(), isAdmin)) {
@@ -121,7 +121,7 @@ public class UserService {
     }
 
     @Transactional
-    public void addUserPhoto(Long user_id, MultipartFile multipartFile,HttpServletResponse httpServletResponse) throws IOException {
+    public void addUserPhoto(Long user_id, MultipartFile multipartFile, HttpServletResponse httpServletResponse) throws IOException {
         boolean exists = userRepository.existsById(user_id);
         if (exists) {
             User user = userRepository.findById(user_id).orElseThrow(() -> new IllegalStateException("Error"));
@@ -154,7 +154,7 @@ public class UserService {
         if (exists) {
             User user = userRepository.findById(user_id).orElseThrow(() -> new IllegalStateException("Error"));
             Resource resource1 = new PathResource(user.getPhoto_url());
-            response.setContentType("image/jpeg");
+            response.setContentType("image/png");
             try {
                 return new InputStreamResource(new FileInputStream(resource1.getFile()));
             } catch (Exception e) {

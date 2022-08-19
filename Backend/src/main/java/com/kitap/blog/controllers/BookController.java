@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/book")
@@ -39,9 +40,9 @@ public class BookController {
         return bookService.getLast20Books();
     }
 
-    @GetMapping(path = "{book_id}")
-    public Book getBook(@PathVariable("book_id") Long book_id) {
-        return bookService.getBook(book_id);
+    @PostMapping(path = "getBook")
+    public Book getBook(@RequestBody Map<String, Object> body) {
+        return bookService.getBook(Long.parseLong(String.valueOf(body.get("book_id"))));
     }
 
     @PostMapping
@@ -50,11 +51,11 @@ public class BookController {
     }
 
     @PostMapping("/photo")
-    public boolean addBookPhoto(@RequestParam("image") MultipartFile multipartFile) throws IOException {
-        return bookService.addBookPhoto(1L, multipartFile);
+    public void addUserPhoto(@RequestParam("book_id") Long book_id, @RequestParam("image") MultipartFile multipartFile, HttpServletResponse httpServletResponse) throws IOException {
+        bookService.addBookPhoto(book_id, multipartFile, httpServletResponse);
     }
 
-    @GetMapping(path="/photo/{book_id}", produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(path = "/photo/{book_id}", produces = MediaType.IMAGE_PNG_VALUE)
     public InputStreamResource getBookPhoto(@PathVariable("book_id") Long book_id) throws IOException {
         HttpServletResponse response = new HttpServletResponse() {
             @Override
@@ -88,17 +89,17 @@ public class BookController {
             }
 
             @Override
-            public void sendError(int i, String s) throws IOException {
+            public void sendError(int i, String s) {
 
             }
 
             @Override
-            public void sendError(int i) throws IOException {
+            public void sendError(int i) {
 
             }
 
             @Override
-            public void sendRedirect(String s) throws IOException {
+            public void sendRedirect(String s) {
 
             }
 
@@ -133,11 +134,6 @@ public class BookController {
             }
 
             @Override
-            public void setStatus(int i) {
-
-            }
-
-            @Override
             public void setStatus(int i, String s) {
 
             }
@@ -145,6 +141,11 @@ public class BookController {
             @Override
             public int getStatus() {
                 return 0;
+            }
+
+            @Override
+            public void setStatus(int i) {
+
             }
 
             @Override
@@ -168,23 +169,28 @@ public class BookController {
             }
 
             @Override
+            public void setCharacterEncoding(String s) {
+
+            }
+
+            @Override
             public String getContentType() {
                 return null;
             }
 
             @Override
-            public ServletOutputStream getOutputStream() throws IOException {
+            public void setContentType(String s) {
+
+            }
+
+            @Override
+            public ServletOutputStream getOutputStream() {
                 return null;
             }
 
             @Override
-            public PrintWriter getWriter() throws IOException {
+            public PrintWriter getWriter() {
                 return null;
-            }
-
-            @Override
-            public void setCharacterEncoding(String s) {
-
             }
 
             @Override
@@ -198,8 +204,8 @@ public class BookController {
             }
 
             @Override
-            public void setContentType(String s) {
-
+            public int getBufferSize() {
+                return 0;
             }
 
             @Override
@@ -208,12 +214,7 @@ public class BookController {
             }
 
             @Override
-            public int getBufferSize() {
-                return 0;
-            }
-
-            @Override
-            public void flushBuffer() throws IOException {
+            public void flushBuffer() {
 
             }
 
@@ -233,16 +234,16 @@ public class BookController {
             }
 
             @Override
-            public void setLocale(Locale locale) {
-
-            }
-
-            @Override
             public Locale getLocale() {
                 return null;
             }
+
+            @Override
+            public void setLocale(Locale locale) {
+
+            }
         };
-         return bookService.getBookPhoto(book_id, response);
+        return bookService.getBookPhoto(book_id, response);
     }
 
     @DeleteMapping(path = "{book_id}")
@@ -250,13 +251,15 @@ public class BookController {
         return bookService.deleteBook(book_id);
     }
 
-    @PutMapping(path = "{book_id}")
-    public boolean updateBook(
-            @PathVariable("book_id") Long book_id,
-            @RequestParam(required = false) Long author_id,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String about,
-            @RequestParam(required = false) String photo_url) {
-        return bookService.updateBook(book_id, author_id, name, about, photo_url);
+    @PutMapping(path = "/updateBook")
+    public boolean updateBook(@RequestBody Map<String, Object> body) {
+        Long author_id = null;
+        if (!(String.valueOf(body.get("author_id")).equals("null")))
+            author_id = Long.valueOf(String.valueOf(body.get("author_id")));
+        return bookService.updateBook(Long.valueOf(String.valueOf(body.get("book_id"))),
+                author_id,
+                String.valueOf(body.get("name")),
+                String.valueOf(body.get("about")),
+                String.valueOf(body.get("photo_url")));
     }
 }

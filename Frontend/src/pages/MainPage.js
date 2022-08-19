@@ -40,36 +40,14 @@ export default function MainPage() {
         <Navbar />
         <div className="container-fluid">
           <div className="row">
-            <form
-              action="/api/user/photo"
-              object="{user}"
-              method="post"
-              encType="multipart/form-data"
-            >
-              <div>
-                <label>Photos: </label>
-                <input
-                  type="text"
-                  name="user_id"
-                  defaultValue={user_id}
-                  hidden
-                />
-                <input
-                  type="file"
-                  name="image"
-                  accept="image/png"
-                  onChange={handlePhoto}
-                />
-              </div>
-              <input type="submit" value="Upload" />
-            </form>
+            <p className="altbaslik">Son eklenenler</p>
             {books?.map((book) => {
               return (
                 <div
                   key={book.book_id}
                   className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
                 >
-                  <Link to={book.book_id} className="book">
+                  <Link to={"/book/" + book.book_id} className="book">
                     <div className="card">
                       <div className="card-img-top mt-3">
                         <img

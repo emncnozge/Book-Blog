@@ -2,9 +2,16 @@ package com.kitap.blog.services;
 
 import com.kitap.blog.entities.Author;
 import com.kitap.blog.repositories.AuthorRepository;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.PathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import java.io.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,7 +73,48 @@ public class AuthorService {
             }
             return true;
         } else return false;
+    }
 
 
+    @Transactional
+    public void addAuthorPhoto(Long author_id, MultipartFile multipartFile, HttpServletResponse httpServletResponse) throws IOException {
+        boolean exists = authorRepository.existsById(author_id);
+        if (exists) {
+            Author author = authorRepository.findById(author_id).orElseThrow(() -> new IllegalStateException("Error"));
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename() == null ? "" : multipartFile.getOriginalFilename());
+            String uploadDir = "images/author-photos/" + author_id;
+            author.setPhoto_url(uploadDir + "/" + fileName);
+
+            byte[] bytes = multipartFile.getBytes();
+
+            File dir = new File(uploadDir);
+            if (!dir.exists())
+                dir.mkdirs();
+
+            File serverFile = new File(dir.getAbsolutePath()
+                    + File.separator + fileName);
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(serverFile));
+            stream.write(bytes);
+            stream.close();
+        }
+        httpServletResponse.sendRedirect("http://localhost:3000/book/" + author_id);
+    }
+
+    public InputStreamResource getAuthorPhoto(Long author_id, HttpServletResponse response) throws IOException {
+        boolean exists = authorRepository.existsById(author_id);
+        if (exists) {
+            Author author = authorRepository.findById(author_id).orElseThrow(() -> new IllegalStateException("Error"));
+            Resource resource1 = new PathResource(author.getPhoto_url());
+            response.setContentType("image/png");
+            try {
+                return new InputStreamResource(new FileInputStream(resource1.getFile()));
+            } catch (Exception e) {
+                resource1 = new PathResource("images/author-photos/default.png");
+                response.setContentType("image/png");
+                return new InputStreamResource(new FileInputStream(resource1.getFile()));
+            }
+
+        } else return null;
     }
 }

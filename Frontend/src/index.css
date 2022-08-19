@@ -172,3 +172,33 @@ code {
   margin-top: 1rem;
   text-align: center;
 }
+
+.baslik {
+  text-align: center;
+  font-size: 24pt;
+  font-weight: bold;
+  color: #FF5722;
+  margin-bottom: 2rem;
+}
+
+.about {
+  font-size: 16pt;
+  font-weight: 500;
+  color: #FF5722;
+  opacity: .85;
+  margin-bottom: 2rem;
+}
+
+.aboutIcerik {
+  font-size: 13pt;
+  text-align: justify;
+}
+
+.altbaslik {
+  text-align: left;
+  font-size: 20pt;
+  font-weight: 600;
+  color: #FF5722;
+  margin-bottom: 2rem;
+  opacity: .9;
+}

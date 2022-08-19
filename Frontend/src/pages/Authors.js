@@ -27,14 +27,14 @@ export default function MainPage() {
                   key={author.author_id}
                   className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
                 >
-                  <Link to={author.author_id} className="author">
+                  <Link to={"/author/" + author.author_id} className="author">
                     <div className="card">
                       <div className="card-img-top mt-3">
                         <img
                           alt="author_photo"
                           src={
                             "http://localhost:8080/api/author/photo/" +
-                            author.book_id
+                            author.author_id
                           }
                           className="image"
                         />

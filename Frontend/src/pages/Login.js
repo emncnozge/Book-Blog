@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Logo from "../img/logo.png";
 import Modal from "react-bootstrap/Modal";
 export default function Navbar() {

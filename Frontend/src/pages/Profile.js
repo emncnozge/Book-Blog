@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Windows } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 export default function MainPage() {
@@ -10,7 +9,6 @@ export default function MainPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [photo, setPhoto] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
 
   const deleteAccount = async (e) => {
