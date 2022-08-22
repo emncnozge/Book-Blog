@@ -5,7 +5,7 @@ export default function Book() {
   const navigate = useNavigate();
   const [about, setAbout] = useState("");
   const [name, setName] = useState("");
-  const [book_id, setBook_id] = useState(0);
+  const [user_id, setUser_id] = useState(0);
   const [loggedIn, setLoggedIn] = useState(false);
   const location = useLocation();
 
@@ -13,14 +13,15 @@ export default function Book() {
     setLoggedIn(window.localStorage.getItem("loggedIn"));
     if (!window.localStorage.getItem("loggedIn"))
       navigate("login", { replace: true });
-    setBook_id(location.pathname.split("/")[2]);
+    setUser_id(location.pathname.split("/")[2]);
     const axios = require("axios");
     axios
-      .post("/api/book/getBook", {
-        book_id: location.pathname.split("/")[2],
+      .post("/api/user/getUser", {
+        user_id: location.pathname.split("/")[2],
+        token: "Izgg1AUtqtyzwEWxQcRIxm2rBSXPXxRv",
       })
       .then(function (response) {
-        setBook_id(response.data.book_id);
+        setUser_id(response.data.setUser_id);
         setName(response.data.name);
         setAbout(response.data.about);
       })
@@ -39,18 +40,18 @@ export default function Book() {
             <div className="d-table-cell my-auto p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
               <div>
                 <img
-                  alt="book"
+                  alt="author"
                   style={{
                     maxWidth: "80%",
                     maxHeight: "80%",
                     objectFit: "cover",
                   }}
-                  src={"/api/book/photo/" + book_id}
+                  src={"/api/user/photo/" + location.pathname.split("/")[2]}
                 />
               </div>
             </div>
             <div className="col-12 col-sm-7 col-md-8">
-              <div className="about">Kitap Hakkında</div>
+              <div className="about">Kullanıcı Hakkında</div>
               <p className="aboutIcerik">{about}</p>
             </div>
           </div>

@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar";
@@ -28,7 +27,7 @@ export default function Book() {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [navigate, location.pathname]);
 
   if (loggedIn)
     return (
@@ -40,13 +39,13 @@ export default function Book() {
             <div className="d-table-cell my-auto p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
               <div>
                 <img
-                  alt="book"
+                  alt="author"
                   style={{
                     maxWidth: "80%",
                     maxHeight: "80%",
                     objectFit: "cover",
                   }}
-                  src={"http://localhost:8080/api/author/photo/" + author_id}
+                  src={"/api/author/photo/" + author_id}
                 />
               </div>
             </div>

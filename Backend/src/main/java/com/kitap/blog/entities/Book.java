@@ -16,6 +16,8 @@ public class Book {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "genre", nullable = false)
+    private String genre;
     @Column(name = "author_id", nullable = false)
     private Long author_id;
 
@@ -34,9 +36,10 @@ public class Book {
     public Book() {
     }
 
-    public Book(Long book_id, String name, Long author_id, String about, String photo_url, Date createdOn, Date updatedOn) {
+    public Book(Long book_id, String name, String genre, Long author_id, String about, String photo_url, Date createdOn, Date updatedOn) {
         this.book_id = book_id;
         this.name = name;
+        this.genre = genre;
         this.author_id = author_id;
         this.about = about;
         this.photo_url = photo_url;
@@ -58,6 +61,14 @@ public class Book {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public Long getAuthor_id() {
@@ -105,6 +116,7 @@ public class Book {
         return "Book{" +
                 "book_id=" + book_id +
                 ", name='" + name + '\'' +
+                ", genre='" + genre + '\'' +
                 ", author_id=" + author_id +
                 ", about='" + about + '\'' +
                 ", photo_url='" + photo_url + '\'' +

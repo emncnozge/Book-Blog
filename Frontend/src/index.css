@@ -40,11 +40,16 @@ code {
   font-size: 14pt;
   transition: .2s ease;
   text-align: center;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: rgba(255, 87, 34, .8);
 }
 
 .profile {
   font-size: 12pt;
-  color: #FF5722;
+  color: rgb(255, 87, 34);
   opacity: .9;
   font-weight: bold;
   cursor: pointer;
@@ -201,4 +206,9 @@ code {
   color: #FF5722;
   margin-bottom: 2rem;
   opacity: .9;
+}
+
+.search {
+  display: flex;
+  justify-content: flex-end;
 }

@@ -1,21 +1,85 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../img/logo.png";
 import $ from "jquery";
+import Select from "react-select";
+import Overlay from "react-bootstrap/Overlay";
 
 export default function Navbar() {
   const [name, setName] = useState("");
   const [user_id, setUser_id] = useState("");
+  const [show, setShow] = useState(false);
+  const target = useRef(null);
+  const [genres, setGenres] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [books, setBooks] = useState([]);
+  const [selectedBook, setSelectedBook] = useState("");
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState("");
   useEffect(() => {
     setName(window.localStorage.getItem("name"));
     setUser_id(window.localStorage.getItem("user_id"));
+
+    const axios = require("axios");
+    axios
+      .get("/api/book/getGenres")
+      .then((response) => {
+        let getGenres = [];
+        for (let i = 0; i < response.data.length; i++) {
+          getGenres.push({ value: response.data[i], label: response.data[i] });
+        }
+        setGenres(getGenres);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    axios
+      .post("/api/user/getUsers", { token: "Izgg1AUtqtyzwEWxQcRIxm2rBSXPXxRv" })
+      .then((response) => {
+        let getUsers = [];
+        for (let i = 0; i < response.data.length; i++) {
+          if (
+            response.data[i].user_id != window.localStorage.getItem("user_id")
+          )
+            getUsers.push({
+              value: response.data[i].user_id,
+              label: response.data[i].name,
+            });
+        }
+        setUsers(getUsers);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }, []);
+
+  useEffect(() => {
+    setSelectedBook("");
+    setBooks([]);
+    const axios = require("axios");
+    axios
+      .post("/api/book/getBooksByGenre", { genre: selectedGenre.value })
+      .then((response) => {
+        let getOption = [];
+        for (let i = 0; i < response.data.length; i++) {
+          getOption.push({
+            value: response.data[i].book_id,
+            label: response.data[i].name,
+          });
+        }
+        setBooks(getOption);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [selectedGenre]);
 
   const handleLogout = () => {
     window.localStorage.removeItem("user_id");
     window.localStorage.removeItem("name");
     window.localStorage.removeItem("loggedIn");
   };
+
   return (
     <>
       <div className="navbar mb-4">
@@ -32,9 +96,79 @@ export default function Navbar() {
             <Link to="/authors" className="link">
               Yazarlar
             </Link>
-            <Link to="/" className="link">
+            <span className="link" ref={target} onClick={() => setShow(!show)}>
               Arama
-            </Link>
+            </span>
+            <Overlay target={target.current} show={show} placement="bottom">
+              {({ placement, arrowProps, show: _show, popper, ...props }) => (
+                <div
+                  {...props}
+                  style={{
+                    position: "absolute",
+                    backgroundColor: "#fff",
+                    border: "1px solid #eee",
+                    padding: "1rem",
+                    color: "black",
+                    borderRadius: ".5rem",
+                    zIndex: 999999,
+                    width: "min(30vw, 300px)",
+                    ...props.style,
+                  }}
+                >
+                  <Select
+                    options={users}
+                    value={selectedUser}
+                    placeholder={
+                      users?.length > 0 ? "Kullanıcı" : "Kullanıcı bulunamadı"
+                    }
+                    isDisabled={users?.length > 0 ? false : true}
+                    onChange={setSelectedUser}
+                  />
+                  <div className="search">
+                    {users?.length > 0 ? (
+                      <Link
+                        to={"/user/" + selectedUser.value}
+                        className="btn btn-secondary"
+                      >
+                        Git
+                      </Link>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                  <hr />
+                  <Select
+                    options={genres}
+                    value={selectedGenre}
+                    className="mb-2"
+                    placeholder={genres?.length > 0 ? "Tür" : "Tür bulunamadı"}
+                    isDisabled={genres?.length > 0 ? false : true}
+                    onChange={setSelectedGenre}
+                  />
+
+                  <Select
+                    options={books}
+                    className="mb-2"
+                    placeholder="Kitap"
+                    value={selectedBook}
+                    isDisabled={selectedGenre?.value?.length > 0 ? false : true}
+                    onChange={setSelectedBook}
+                  />
+                  <div className="search">
+                    {genres?.length > 0 ? (
+                      <Link
+                        to={"/book/" + selectedBook.value}
+                        className="btn btn-secondary"
+                      >
+                        Git
+                      </Link>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </div>
+              )}
+            </Overlay>
           </div>
           <div
             className="col my-auto dropdown profile"
@@ -60,14 +194,15 @@ export default function Navbar() {
                   borderRadius: "50%",
                   objectFit: "cover",
                 }}
-                src={"http://localhost:8080/api/user/photo/" + user_id}
+                alt="user_photo"
+                src={"/api/user/photo/" + user_id}
                 color="#999"
               ></img>
               <div className="dropdowncontent">
                 <Link to="/profile">Profil</Link>
-                <a href="#">Favori Kitaplar</a>
-                <a href="#">Favori Yazarlar</a>
-                <a href="#">Favori Kullanıcılar</a>
+                <a href="# ">Favori Kitaplar</a>
+                <a href="# ">Favori Yazarlar</a>
+                <a href="# ">Favori Kullanıcılar</a>
                 <Link to="/login" onClick={handleLogout}>
                   Çıkış Yap
                 </Link>

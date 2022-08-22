@@ -132,7 +132,6 @@ public class UserService {
             byte[] bytes = multipartFile.getBytes();
 
             File dir = new File(uploadDir);
-            System.out.println(dir.getAbsolutePath());
             if (!dir.exists())
                 dir.mkdirs();
 

@@ -45,10 +45,24 @@ public class BookController {
         return bookService.getBook(Long.parseLong(String.valueOf(body.get("book_id"))));
     }
 
+    @GetMapping(path = "getGenres")
+    public Object getGenres() {
+        return bookService.getGenres();
+    }
+
+    @PostMapping(path = "getBooksByGenre")
+    public Object getBooksByGenre(@RequestBody Map<String, Object> body) {
+        if (body.get("genre") == null) {
+            return null;
+        }
+        return bookService.getBooksByGenre(body.get("genre").toString());
+    }
+
     @PostMapping
     public boolean addBook(@RequestBody Book book) {
         return bookService.addBook(book);
     }
+
 
     @PostMapping("/photo")
     public void addUserPhoto(@RequestParam("book_id") Long book_id, @RequestParam("image") MultipartFile multipartFile, HttpServletResponse httpServletResponse) throws IOException {
@@ -259,6 +273,7 @@ public class BookController {
         return bookService.updateBook(Long.valueOf(String.valueOf(body.get("book_id"))),
                 author_id,
                 String.valueOf(body.get("name")),
+                String.valueOf(body.get("genre")),
                 String.valueOf(body.get("about")),
                 String.valueOf(body.get("photo_url")));
     }

@@ -62,16 +62,20 @@ public class BookService {
     }
 
     @Transactional
-    public boolean updateBook(Long book_id, Long author_id, String name, String about, String photo_url) {
+    public boolean updateBook(Long book_id, Long author_id, String name, String genre, String about, String photo_url) {
         boolean exists = bookRepository.existsById(book_id);
         if (exists) {
             if (name.equals("null")) name = null;
             if (String.valueOf(author_id).equals("null")) author_id = null;
             if (about.equals("null")) about = null;
+            if (genre.equals("null")) genre = null;
             if (photo_url.equals("null")) photo_url = null;
             Book book = bookRepository.findById(book_id).orElseThrow(() -> new IllegalStateException("Error"));
             if (name != null && name.length() > 0 && !Objects.equals(book.getName(), name)) {
                 book.setName(name);
+            }
+            if (genre != null && genre.length() > 0 && !Objects.equals(book.getGenre(), genre)) {
+                book.setGenre(genre);
             }
             if (author_id != null && author_id > 0 && !Objects.equals(book.getAuthor_id(), author_id)) {
                 book.setAuthor_id(author_id);
@@ -128,5 +132,13 @@ public class BookService {
             }
 
         } else return null;
+    }
+
+    public Object getGenres() {
+        return bookRepository.getGenres();
+    }
+
+    public Object getBooksByGenre(String genre) {
+        return bookRepository.findBooksByGenre(genre);
     }
 }

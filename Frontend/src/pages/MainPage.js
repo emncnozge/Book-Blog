@@ -4,36 +4,19 @@ import Navbar from "../components/Navbar";
 export default function MainPage() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
-  const [user_id, setUser_id] = useState(0);
-  const [name, setName] = useState("");
-  const [photo, setPhoto] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
-  const handlePhoto = (e) => {
-    setPhoto(e.target.files[0]);
-  };
-  const changePhoto = () => {
-    const axios = require("axios");
-    axios.post({
-      url: "http://localhost:8080/api/user/photo/",
-      data: { user_id: user_id, image: photo },
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-  };
+
   useEffect(() => {
     setLoggedIn(window.localStorage.getItem("loggedIn"));
     if (!window.localStorage.getItem("loggedIn"))
       navigate("login", { replace: true });
     const axios = require("axios");
     axios
-      .get("http://localhost:8080/api/book/last20")
+      .get("/api/book/last20")
       .then((response) => response.data)
       .then((data) => setBooks(data));
     setLoggedIn(window.localStorage.getItem("loggedIn"));
-    setUser_id(window.localStorage.getItem("user_id"));
-    setName(window.localStorage.getItem("name"));
-  }, []);
+  }, [navigate]);
   if (loggedIn)
     return (
       <>
@@ -52,10 +35,7 @@ export default function MainPage() {
                       <div className="card-img-top mt-3">
                         <img
                           alt="book_photo"
-                          src={
-                            "http://localhost:8080/api/book/photo/" +
-                            book.book_id
-                          }
+                          src={"/api/book/photo/" + book.book_id}
                           className="image"
                         />
                       </div>

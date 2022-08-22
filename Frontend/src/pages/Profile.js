@@ -46,7 +46,7 @@ export default function MainPage() {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [navigate]);
 
   const handleName = (e) => setName(e.target.value);
   const handleEmail = (e) => setEmail(e.target.value);
@@ -82,7 +82,8 @@ export default function MainPage() {
                     padding: "0.1rem",
                     marginBottom: "1rem",
                   }}
-                  src={"http://localhost:8080/api/user/photo/" + user_id}
+                  alt="profile_photo"
+                  src={"/api/user/photo/" + user_id}
                 />
 
                 <form
