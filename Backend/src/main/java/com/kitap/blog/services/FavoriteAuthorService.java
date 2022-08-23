@@ -4,6 +4,7 @@ import com.kitap.blog.entities.FavoriteAuthor;
 import com.kitap.blog.repositories.FavoriteAuthorRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -14,31 +15,39 @@ public class FavoriteAuthorService {
         this.favoriteAuthorRepository = favoriteAuthorRepository;
     }
 
-    public List<FavoriteAuthor> getFavoriteAuthors(Long user_id) {
-        return favoriteAuthorRepository.getFavoriteAuthors(user_id);
+    public List<Object> getFavoriteAuthors(Long user_id) {
+        return favoriteAuthorRepository.getFavoriteAuthorsByUserid(user_id);
     }
 
     public boolean getFavoriteAuthor(Long user_id, Long favorite_author_id) {
-        return (favoriteAuthorRepository.getFavoriteAuthor(user_id, favorite_author_id).size() > 0);
+        return (favoriteAuthorRepository.existsFavoriteAuthorByUseridAndFavoriteauthorid(user_id, favorite_author_id));
     }
 
     public boolean addFavoriteAuthor(FavoriteAuthor favoriteAuthor) {
         try {
-            favoriteAuthorRepository.saveAndFlush(favoriteAuthor);
-            return true;
+
+            if (!favoriteAuthorRepository.existsFavoriteAuthorByUseridAndFavoriteauthorid(favoriteAuthor.getUserid(),
+                    favoriteAuthor.getFavoriteauthorid())) {
+                favoriteAuthorRepository.saveAndFlush(favoriteAuthor);
+                return true;
+            }
         } catch (Exception e) {
             System.out.println(e);
-            return false;
+
         }
+        return false;
     }
 
-    public boolean deleteFavoriteAuthor(Long id) {
+    @Transactional
+    public boolean deleteFavoriteAuthor(Long user_id, Long favorite_author_id) {
         try {
-            boolean exists = favoriteAuthorRepository.existsById(id);
+            boolean exists = favoriteAuthorRepository.existsFavoriteAuthorByUseridAndFavoriteauthorid(user_id,
+                    favorite_author_id);
             if (exists) {
-                favoriteAuthorRepository.deleteById(id);
+                favoriteAuthorRepository.deleteFavoriteAuthorByUseridAndFavoriteauthorid(user_id, favorite_author_id);
                 return true;
-            } else return false;
+            } else
+                return false;
 
         } catch (Exception e) {
             System.out.println(e);

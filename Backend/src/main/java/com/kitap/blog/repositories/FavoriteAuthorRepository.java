@@ -9,9 +9,10 @@ import java.util.List;
 
 @Repository
 public interface FavoriteAuthorRepository extends JpaRepository<FavoriteAuthor, Long> {
-    @Query("FROM favorite_author fa WHERE fa.user_id = :user_id")
-    List<FavoriteAuthor> getFavoriteAuthors(Long user_id);
+    @Query("select a from author a, favorite_author fa where fa.favoriteauthorid=a.author_id and fa.userid=:user_id")
+    List<Object> getFavoriteAuthorsByUserid(Long user_id);
 
-    @Query("FROM favorite_author fa WHERE fa.user_id = :user_id AND fa.favorite_author_id= :favorite_author_id")
-    List<FavoriteAuthor> getFavoriteAuthor(Long user_id, Long favorite_author_id);
+    Boolean existsFavoriteAuthorByUseridAndFavoriteauthorid(Long user_id, Long favorite_author_id);
+
+    void deleteFavoriteAuthorByUseridAndFavoriteauthorid(Long user_id, Long favorite_author_id);
 }

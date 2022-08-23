@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/favoriteuser")
@@ -20,13 +21,14 @@ public class FavoriteUserController {
     }
 
     @GetMapping
-    public List<FavoriteUser> getFavoriteUsers(@RequestParam(required = false) Long user_id) {
+    public List<Object> getFavoriteUsers(@RequestParam(required = false) Long user_id) {
         return favoriteUserService.getFavoriteUsers(user_id);
     }
 
-    @GetMapping(path = "isfavoriteuser")
-    public boolean getFavoriteUser(@RequestParam(required = false) Long user_id, @RequestParam(required = false) Long favorite_user_id) {
-        return favoriteUserService.getFavoriteUser(user_id, favorite_user_id);
+    @GetMapping(path = "isfavoritebook")
+    public boolean getFavoriteUser(@RequestParam(required = false) Long user_id,
+                                   @RequestParam(required = false) Long favorite_book_id) {
+        return favoriteUserService.getFavoriteUser(user_id, favorite_book_id);
     }
 
     @PostMapping
@@ -34,9 +36,11 @@ public class FavoriteUserController {
         return favoriteUserService.addFavoriteUser(favoriteUser);
     }
 
-    @DeleteMapping(path = "{id}")
-    public boolean deleteFavoriteUser(@PathVariable("id") Long id) {
-        return favoriteUserService.deleteFavoriteUser(id);
+    @PostMapping(path = "delete")
+    public boolean deleteFavoriteUser(@RequestBody Map<String, Object> data) {
+
+        return favoriteUserService.deleteFavoriteUser(Long.valueOf(data.get("userid").toString()),
+                Long.valueOf(data.get("favoriteuserid").toString()));
     }
 
 }

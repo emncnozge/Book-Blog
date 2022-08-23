@@ -2,7 +2,6 @@ package com.kitap.blog.entities;
 
 import javax.persistence.*;
 
-
 @Entity(name = "favorite_author")
 public class FavoriteAuthor {
     @Id
@@ -12,50 +11,51 @@ public class FavoriteAuthor {
     private Long id;
 
     @Column(name = "user_id", nullable = false)
-    private Long user_id;
+    private Long userid;
 
     @Column(name = "favorite_author_id", nullable = false)
-    private Long favorite_author_id;
+    private Long favoriteauthorid;
 
     public FavoriteAuthor() {
     }
 
-    public FavoriteAuthor(Long id, Long user_id, Long favorite_author_id) {
+    public FavoriteAuthor(Long id, Long userid, Long favoriteauthorid) {
         this.id = id;
-        this.user_id = user_id;
-        this.favorite_author_id = favorite_author_id;
+        this.userid = userid;
+        this.favoriteauthorid = favoriteauthorid;
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserid() {
+        return this.userid;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
-    public Long getFavorite_author_id() {
-        return favorite_author_id;
+    public Long getFavoriteauthorid() {
+        return this.favoriteauthorid;
     }
 
-    public void setFavorite_author_id(Long favorite_author_id) {
-        this.favorite_author_id = favorite_author_id;
+    public void setFavoriteauthorid(Long favoriteauthorid) {
+        this.favoriteauthorid = favoriteauthorid;
     }
 
     @Override
     public String toString() {
-        return "FavoriteUser{" +
-                "id=" + id +
-                ", user_id=" + user_id +
-                ", favorite_author_id=" + favorite_author_id +
-                '}';
+        return "{" +
+                " id='" + getId() + "'" +
+                ", userid='" + getUserid() + "'" +
+                ", favoriteauthorid='" + getFavoriteauthorid() + "'" +
+                "}";
     }
+
 }

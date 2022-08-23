@@ -2,7 +2,6 @@ package com.kitap.blog.entities;
 
 import javax.persistence.*;
 
-
 @Entity(name = "favorite_user")
 public class FavoriteUser {
     @Id
@@ -12,50 +11,51 @@ public class FavoriteUser {
     private Long id;
 
     @Column(name = "user_id", nullable = false)
-    private Long user_id;
+    private Long userid;
 
     @Column(name = "favorite_user_id", nullable = false)
-    private Long favorite_user_id;
+    private Long favoriteuserid;
 
     public FavoriteUser() {
     }
 
-    public FavoriteUser(Long id, Long user_id, Long favorite_user_id) {
+    public FavoriteUser(Long id, Long userid, Long favoriteuserid) {
         this.id = id;
-        this.user_id = user_id;
-        this.favorite_user_id = favorite_user_id;
+        this.userid = userid;
+        this.favoriteuserid = favoriteuserid;
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserid() {
+        return this.userid;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
-    public Long getFavorite_user_id() {
-        return favorite_user_id;
+    public Long getFavoriteuserid() {
+        return this.favoriteuserid;
     }
 
-    public void setFavorite_user_id(Long favorite_user_id) {
-        this.favorite_user_id = favorite_user_id;
+    public void setFavoriteuserid(Long favoriteuserid) {
+        this.favoriteuserid = favoriteuserid;
     }
 
     @Override
     public String toString() {
-        return "FavoriteUser{" +
-                "id=" + id +
-                ", user_id=" + user_id +
-                ", favorite_user_id=" + favorite_user_id +
-                '}';
+        return "{" +
+                " id='" + getId() + "'" +
+                ", userid='" + getUserid() + "'" +
+                ", favoriteuserid='" + getFavoriteuserid() + "'" +
+                "}";
     }
+
 }

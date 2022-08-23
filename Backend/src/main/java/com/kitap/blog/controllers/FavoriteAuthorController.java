@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/favoriteauthor")
@@ -20,7 +21,7 @@ public class FavoriteAuthorController {
     }
 
     @GetMapping
-    public List<FavoriteAuthor> getFavoriteAuthors(@RequestParam(required = false) Long user_id) {
+    public List<Object> getFavoriteAuthors(@RequestParam(required = false) Long user_id) {
         return favoriteAuthorService.getFavoriteAuthors(user_id);
     }
 
@@ -35,9 +36,11 @@ public class FavoriteAuthorController {
         return favoriteAuthorService.addFavoriteAuthor(favoriteAuthor);
     }
 
-    @DeleteMapping(path = "{id}")
-    public boolean deleteFavoriteAuthor(@PathVariable("id") Long id) {
-        return favoriteAuthorService.deleteFavoriteAuthor(id);
+    @PostMapping(path = "delete")
+    public boolean deleteFavoriteAuthor(@RequestBody Map<String, Object> data) {
+
+        return favoriteAuthorService.deleteFavoriteAuthor(Long.valueOf(data.get("userid").toString()),
+                Long.valueOf(data.get("favoriteauthorid").toString()));
     }
 
 }

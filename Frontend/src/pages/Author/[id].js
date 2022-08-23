@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { HeartFill, Heart } from "react-bootstrap-icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 export default function Book() {
@@ -7,8 +8,56 @@ export default function Book() {
   const [name, setName] = useState("");
   const [author_id, setAuthor_id] = useState(0);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const location = useLocation();
+  const handleFavorite = () => {
+    const axios = require("axios");
+    if (!favorite) {
+      var data = JSON.stringify({
+        userid: window.localStorage.getItem("user_id"),
+        favoriteauthorid: location.pathname.split("/")[2],
+      });
 
+      var config = {
+        method: "post",
+        url: "/api/favoriteauthor",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          setFavorite(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      var data = JSON.stringify({
+        userid: window.localStorage.getItem("user_id"),
+        favoriteauthorid: location.pathname.split("/")[2],
+      });
+
+      var config = {
+        method: "post",
+        url: "/api/favoriteauthor/delete",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          setFavorite(!response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  };
   useEffect(() => {
     setLoggedIn(window.localStorage.getItem("loggedIn"));
     if (!window.localStorage.getItem("loggedIn"))
@@ -27,6 +76,20 @@ export default function Book() {
       .catch(function (error) {
         console.log(error);
       });
+
+    axios
+      .get(
+        "/api/favoriteauthor/isfavoriteauthor?user_id=" +
+          window.localStorage.getItem("user_id") +
+          "&favorite_author_id=" +
+          location.pathname.split("/")[2]
+      )
+      .then(function (response) {
+        setFavorite(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }, [navigate, location.pathname]);
 
   if (loggedIn)
@@ -34,8 +97,19 @@ export default function Book() {
       <>
         <Navbar />
         <div className="container-fluid">
+          <p className="baslik">{name}</p>
+          <button
+            id="favorite"
+            className="btn favorite"
+            onClick={handleFavorite}
+          >
+            {favorite ? (
+              <HeartFill style={{ marginBottom: "4px" }}></HeartFill>
+            ) : (
+              <Heart style={{ marginBottom: "4px" }}></Heart>
+            )}
+          </button>
           <div className="row ">
-            <p className="baslik">{name}</p>
             <div className="d-table-cell my-auto p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
               <div>
                 <img

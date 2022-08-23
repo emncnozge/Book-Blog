@@ -4,6 +4,7 @@ import com.kitap.blog.entities.FavoriteUser;
 import com.kitap.blog.repositories.FavoriteUserRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -14,31 +15,39 @@ public class FavoriteUserService {
         this.favoriteUserRepository = favoriteUserRepository;
     }
 
-    public List<FavoriteUser> getFavoriteUsers(Long user_id) {
-        return favoriteUserRepository.getFavoriteUsers(user_id);
+    public List<Object> getFavoriteUsers(Long user_id) {
+        return favoriteUserRepository.getFavoriteUsersByUserid(user_id);
     }
 
     public boolean getFavoriteUser(Long user_id, Long favorite_user_id) {
-        return (favoriteUserRepository.getFavoriteUser(user_id, favorite_user_id).size() > 0);
+        return (favoriteUserRepository.existsFavoriteUserByUseridAndFavoriteuserid(user_id, favorite_user_id));
     }
 
     public boolean addFavoriteUser(FavoriteUser favoriteUser) {
         try {
-            favoriteUserRepository.saveAndFlush(favoriteUser);
-            return true;
+
+            if (!favoriteUserRepository.existsFavoriteUserByUseridAndFavoriteuserid(favoriteUser.getUserid(),
+                    favoriteUser.getFavoriteuserid())) {
+                favoriteUserRepository.saveAndFlush(favoriteUser);
+                return true;
+            }
         } catch (Exception e) {
             System.out.println(e);
-            return false;
+
         }
+        return false;
     }
 
-    public boolean deleteFavoriteUser(Long id) {
+    @Transactional
+    public boolean deleteFavoriteUser(Long user_id, Long favorite_user_id) {
         try {
-            boolean exists = favoriteUserRepository.existsById(id);
+            boolean exists = favoriteUserRepository.existsFavoriteUserByUseridAndFavoriteuserid(user_id,
+                    favorite_user_id);
             if (exists) {
-                favoriteUserRepository.deleteById(id);
+                favoriteUserRepository.deleteFavoriteUserByUseridAndFavoriteuserid(user_id, favorite_user_id);
                 return true;
-            } else return false;
+            } else
+                return false;
 
         } catch (Exception e) {
             System.out.println(e);

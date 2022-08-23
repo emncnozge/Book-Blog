@@ -78,6 +78,7 @@ export default function Navbar() {
     window.localStorage.removeItem("user_id");
     window.localStorage.removeItem("name");
     window.localStorage.removeItem("loggedIn");
+    window.localStorage.removeItem("is_admin");
   };
 
   return (
@@ -128,7 +129,7 @@ export default function Navbar() {
                     {users?.length > 0 ? (
                       <Link
                         to={"/user/" + selectedUser.value}
-                        className="btn btn-secondary"
+                        className="btn btn-secondary mt-2"
                       >
                         Git
                       </Link>
@@ -200,9 +201,9 @@ export default function Navbar() {
               ></img>
               <div className="dropdowncontent">
                 <Link to="/profile">Profil</Link>
-                <a href="# ">Favori Kitaplar</a>
-                <a href="# ">Favori Yazarlar</a>
-                <a href="# ">Favori Kullanıcılar</a>
+                <Link to="/favoritebooks">Favori Kitaplar</Link>
+                <Link to="/favoriteauthors">Favori Yazarlar</Link>
+                <Link to="/favoriteusers">Favori Kullanıcılar</Link>
                 <Link to="/login" onClick={handleLogout}>
                   Çıkış Yap
                 </Link>

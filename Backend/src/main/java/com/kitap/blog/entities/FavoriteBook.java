@@ -10,19 +10,19 @@ public class FavoriteBook {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long user_id;
+    @Column(name = "user_id")
+    private Long userid;
 
-    @Column(name = "favorite_book_id", nullable = false)
-    private Long favorite_book_id;
+    @Column(name = "favorite_book_id")
+    private Long favoritebookid;
 
     public FavoriteBook() {
     }
 
-    public FavoriteBook(Long id, Long user_id, Long favorite_book_id) {
+    public FavoriteBook(Long id, Long userid, Long favoritebookid) {
         this.id = id;
-        this.user_id = user_id;
-        this.favorite_book_id = favorite_book_id;
+        this.userid = userid;
+        this.favoritebookid = favoritebookid;
     }
 
     public Long getId() {
@@ -33,28 +33,30 @@ public class FavoriteBook {
         this.id = id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserid() {
+        return userid;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
-    public Long getFavorite_book_id() {
-        return favorite_book_id;
+    public Long getFavoritebookid() {
+        return favoritebookid;
     }
 
-    public void setFavorite_book_id(Long favorite_book_id) {
-        this.favorite_book_id = favorite_book_id;
+    public void setFavoritebookid(Long favoritebookid) {
+        this.favoritebookid = favoritebookid;
     }
 
     @Override
     public String toString() {
-        return "FavoriteUser{" +
+        return "FavoriteBook{" +
                 "id=" + id +
-                ", user_id=" + user_id +
-                ", favorite_book_id=" + favorite_book_id +
+                ", userid=" + userid +
+                ", favoritebookid=" + favoritebookid +
                 '}';
     }
+
 }

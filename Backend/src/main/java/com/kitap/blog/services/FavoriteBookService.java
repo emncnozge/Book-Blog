@@ -4,6 +4,7 @@ import com.kitap.blog.entities.FavoriteBook;
 import com.kitap.blog.repositories.FavoriteBookRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -14,29 +15,34 @@ public class FavoriteBookService {
         this.favoriteBookRepository = favoriteBookRepository;
     }
 
-    public List<FavoriteBook> getFavoriteBooks(Long user_id) {
-        return favoriteBookRepository.getFavoriteBooks(user_id);
+    public List<Object> getFavoriteBooks(Long user_id) {
+        return favoriteBookRepository.getFavoriteBooksByUserid(user_id);
     }
 
     public boolean getFavoriteBook(Long user_id, Long favorite_book_id) {
-        return (favoriteBookRepository.getFavoriteBook(user_id, favorite_book_id).size() > 0);
+        return (favoriteBookRepository.existsFavoriteBookByUseridAndFavoritebookid(user_id, favorite_book_id));
     }
 
     public boolean addFavoriteBook(FavoriteBook favoriteBook) {
         try {
-            favoriteBookRepository.saveAndFlush(favoriteBook);
-            return true;
+
+            if (!favoriteBookRepository.existsFavoriteBookByUseridAndFavoritebookid(favoriteBook.getUserid(), favoriteBook.getFavoritebookid())) {
+                favoriteBookRepository.saveAndFlush(favoriteBook);
+                return true;
+            }
         } catch (Exception e) {
             System.out.println(e);
-            return false;
+
         }
+        return false;
     }
 
-    public boolean deleteFavoriteBook(Long id) {
+    @Transactional
+    public boolean deleteFavoriteBook(Long user_id, Long favorite_book_id) {
         try {
-            boolean exists = favoriteBookRepository.existsById(id);
+            boolean exists = favoriteBookRepository.existsFavoriteBookByUseridAndFavoritebookid(user_id, favorite_book_id);
             if (exists) {
-                favoriteBookRepository.deleteById(id);
+                favoriteBookRepository.deleteFavoriteBookByUseridAndFavoritebookid(user_id, favorite_book_id);
                 return true;
             } else
                 return false;

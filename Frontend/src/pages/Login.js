@@ -52,6 +52,7 @@ export default function Navbar() {
               .then(function (response) {
                 window.localStorage.setItem("user_id", response.data.user_id);
                 window.localStorage.setItem("name", response.data.name);
+                window.localStorage.setItem("isAdmin", response.data.is_admin);
                 window.localStorage.setItem("loggedIn", true);
               })
               .catch(function (error) {
@@ -100,6 +101,7 @@ export default function Navbar() {
               .then(function (response) {
                 window.localStorage.setItem("user_id", response.data.user_id);
                 window.localStorage.setItem("name", response.data.name);
+                window.localStorage.setItem("is_admin", response.data.is_admin);
               })
               .catch(function (error) {
                 console.log(error);
