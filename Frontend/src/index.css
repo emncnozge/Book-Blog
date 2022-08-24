@@ -70,6 +70,7 @@ code {
   margin-bottom: 1rem;
   transition: .2s ease;
   border: 2px solid #eee;
+  min-height: 380px !important;
 }
 
 .card:hover {

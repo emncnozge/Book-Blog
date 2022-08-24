@@ -37,13 +37,13 @@ public class BookService {
                         new IllegalStateException("Error! Selected book doesn't exist."));
     }
 
-    public boolean addBook(Book book) {
+    public Long addBook(Book book) {
         try {
             bookRepository.saveAndFlush(book);
-            return true;
+            return book.getBook_id();
         } catch (Exception e) {
             System.out.println(e);
-            return false;
+            return 0L;
         }
     }
 
@@ -114,7 +114,7 @@ public class BookService {
             stream.write(bytes);
             stream.close();
         }
-        httpServletResponse.sendRedirect("http://localhost:3000/book/" + book_id);
+        httpServletResponse.sendRedirect("http://localhost:3000/admin/editbook/" + book_id);
     }
 
     public InputStreamResource getBookPhoto(Long book_id, HttpServletResponse response) throws IOException {

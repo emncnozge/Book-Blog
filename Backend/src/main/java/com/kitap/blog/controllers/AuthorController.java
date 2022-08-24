@@ -41,7 +41,7 @@ public class AuthorController {
     }
 
     @PostMapping
-    public boolean addAuthor(@RequestBody Author author) {
+    public Long addAuthor(@RequestBody Author author) {
         return authorService.addAuthor(author);
     }
 
@@ -53,10 +53,8 @@ public class AuthorController {
     @PutMapping(path = "{author_id}")
     public boolean updateAuthor(
             @PathVariable("author_id") Long author_id,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String about,
-            @RequestParam(required = false) String photo_url) {
-        return authorService.updateAuthor(author_id, name, about, photo_url);
+            @RequestBody Map<String, Object> body) {
+        return authorService.updateAuthor(author_id, String.valueOf(body.get("name")), String.valueOf(body.get("about")), String.valueOf(body.get("photo_url")));
     }
 
     @PostMapping("/photo")

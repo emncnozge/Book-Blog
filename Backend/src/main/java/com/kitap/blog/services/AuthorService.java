@@ -33,13 +33,14 @@ public class AuthorService {
                         new IllegalStateException("Error! Selected author doesn't exist."));
     }
 
-    public boolean addAuthor(Author author) {
+    public Long addAuthor(Author author) {
         try {
             authorRepository.saveAndFlush(author);
-            return true;
+
+            return author.getAuthor_id();
         } catch (Exception e) {
             System.out.println(e);
-            return false;
+            return 0L;
         }
     }
 
@@ -61,6 +62,9 @@ public class AuthorService {
     public boolean updateAuthor(Long author_id, String name, String about, String photo_url) {
         boolean exists = authorRepository.existsById(author_id);
         if (exists) {
+            if (name.equals("null")) name = null;
+            if (about.equals("null")) about = null;
+            if (photo_url.equals("null")) photo_url = null;
             Author author = authorRepository.findById(author_id).orElseThrow(() -> new IllegalStateException("Error"));
             if (name != null && name.length() > 0 && !Objects.equals(author.getName(), name)) {
                 author.setName(name);
@@ -98,7 +102,7 @@ public class AuthorService {
             stream.write(bytes);
             stream.close();
         }
-        httpServletResponse.sendRedirect("http://localhost:3000/book/" + author_id);
+        httpServletResponse.sendRedirect("http://localhost:3000/admin/editauthor/" + author_id);
     }
 
     public InputStreamResource getAuthorPhoto(Long author_id, HttpServletResponse response) throws IOException {

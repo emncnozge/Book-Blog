@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import Login from "./pages/Login";
+
 import Authors from "./pages/Authors";
 import Books from "./pages/Books";
 import Profile from "./pages/Profile";
@@ -10,6 +11,14 @@ import Author from "./pages/Author/[id]";
 import FavoriteAuthors from "./pages/FavoriteAuthors";
 import FavoriteBooks from "./pages/FavoriteBooks";
 import FavoriteUsers from "./pages/FavoriteUsers";
+import AdminAuthors from "./pages/Admin/Authors/Authors";
+import AdminAddAuthor from "./pages/Admin/Authors/AddAuthor";
+import AdminEditAuthor from "./pages/Admin/Authors/EditAuthor/[id]";
+import AdminBooks from "./pages/Admin/Books/Books";
+import AdminAddBook from "./pages/Admin/Books/AddBook";
+import AdminEditBook from "./pages/Admin/Books/EditBook/[id]";
+import AdminUsers from "./pages/Admin/Users/Users";
+import AdminEditUser from "./pages/Admin/Users/EditUser/[id]";
 import User from "./pages/User/[id]";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -30,6 +39,14 @@ root.render(
       <Route path="/book/:id" element={<Book />} />
       <Route path="/author/:id" element={<Author />} />
       <Route path="/user/:id" element={<User />} />
+      <Route path="/admin/authors" element={<AdminAuthors />} />
+      <Route path="/admin/addauthor/" element={<AdminAddAuthor />} />
+      <Route path="/admin/editauthor/:id" element={<AdminEditAuthor />} />{" "}
+      <Route path="/admin/books" element={<AdminBooks />} />
+      <Route path="/admin/addbook/" element={<AdminAddBook />} />
+      <Route path="/admin/editbook/:id" element={<AdminEditBook />} />{" "}
+      <Route path="/admin/users" element={<AdminUsers />} />
+      <Route path="/admin/edituser/:id" element={<AdminEditUser />} />
       <Route path="*" element={<MainPage />} />
     </Routes>
   </Router>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import { useNavigate, useLocation } from "react-router-dom";
+import Navbar from "../../../../components/Navbar";
 export default function Profile() {
   const navigate = useNavigate();
   const [user_id, setUser_id] = useState("");
@@ -9,13 +9,16 @@ export default function Profile() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-
+  const location = useLocation();
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const deleteAccount = async (e) => {
     await axios
       .delete("/api/user/deleteUser", {
         data: {
-          user_id: window.localStorage.getItem("user_id"),
+          user_id: location.pathname.split("/")[3],
           token: "Izgg1AUtqtyzwEWxQcRIxm2rBSXPXxRv",
         },
       })
@@ -31,17 +34,18 @@ export default function Profile() {
     setLoggedIn(window.localStorage.getItem("loggedIn"));
     if (!window.localStorage.getItem("loggedIn"))
       navigate("login", { replace: true });
-    setUser_id(window.localStorage.getItem("user_id"));
+    setUser_id(location.pathname.split("/")[3]);
     const axios = require("axios");
     axios
       .post("/api/user/getUser", {
-        user_id: window.localStorage.getItem("user_id"),
+        user_id: location.pathname.split("/")[3],
         token: "Izgg1AUtqtyzwEWxQcRIxm2rBSXPXxRv",
       })
       .then(function (response) {
         setAbout(response.data.about);
         setEmail(response.data.email);
         setName(response.data.name);
+        setIsAdmin(response.data.is_admin);
       })
       .catch(function (error) {
         console.log(error);
@@ -52,16 +56,27 @@ export default function Profile() {
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
   const handleAbout = (e) => setAbout(e.target.value);
-
+  const handleIsAdmin = (e) => setIsAdmin(e.target.checked);
   async function save() {
-    axios.put("/api/user/updateUser", {
-      user_id: window.localStorage.getItem("user_id"),
-      name,
-      email,
-      password,
-      about,
-      token: "Izgg1AUtqtyzwEWxQcRIxm2rBSXPXxRv",
-    });
+    axios
+      .put("/api/user/updateUser", {
+        user_id: location.pathname.split("/")[3],
+        name,
+        email,
+        password,
+        about,
+        isAdmin,
+        token: "Izgg1AUtqtyzwEWxQcRIxm2rBSXPXxRv",
+      })
+      .then((response) => {
+        if (response.data) {
+          setError(false);
+          setSuccess(true);
+        } else {
+          setError(true);
+          setSuccess(false);
+        }
+      });
   }
   if (loggedIn)
     return (
@@ -147,17 +162,44 @@ export default function Profile() {
                 value={about}
                 onChange={handleAbout}
                 className="form-control"
+                style={{ height: "40vh" }}
               />
+              <div className="form-check mt-3">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value={isAdmin}
+                  checked={isAdmin}
+                  onChange={handleIsAdmin}
+                />
+                <label className="form-check-label" for="flexCheckDefault">
+                  Admin
+                </label>
+              </div>
 
-              <div className="mt-2 mb-4" style={{ float: "right" }}>
+              <div className="mt-3 mb-4" style={{ float: "right" }}>
                 <input
                   type="button"
                   className="btn btn-success"
                   value="Kaydet"
                   onClick={save}
                 />
+                {success ? (
+                  <div style={{ textAlign: "center", color: "green" }}>
+                    Başarılı!
+                  </div>
+                ) : (
+                  <></>
+                )}
+                {error ? (
+                  <div style={{ textAlign: "center", color: "red" }}>
+                    Başarısız!
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
-              <div className="mt-2 mb-4">
+              <div className="mt-3 mb-4">
                 <input
                   type="button"
                   className="btn btn-danger"

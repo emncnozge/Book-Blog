@@ -59,7 +59,7 @@ public class BookController {
     }
 
     @PostMapping
-    public boolean addBook(@RequestBody Book book) {
+    public Long addBook(@RequestBody Book book) {
         return bookService.addBook(book);
     }
 

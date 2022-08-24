@@ -16,7 +16,7 @@ public class Author {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "about", nullable = false)
+    @Column(name = "about", nullable = false, columnDefinition = "TEXT")
     private String about;
 
     @Column(name = "photo_url")

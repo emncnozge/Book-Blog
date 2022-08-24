@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-export default function FavoriteAuthors() {
-  const [authors, setAuthors] = useState([]);
+import Navbar from "../../../components/Navbar";
+export default function Users() {
+  const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [search, setSearch] = useState("");
-  const navigate = useNavigate();
+
   useEffect(() => {
     setLoggedIn(window.localStorage.getItem("loggedIn"));
     if (!window.localStorage.getItem("loggedIn"))
       navigate("login", { replace: true });
+
     const axios = require("axios");
     axios
-      .get(
-        "/api/favoriteauthor/?user_id=" + window.localStorage.getItem("user_id")
-      )
+      .post("/api/user/getUsers", {
+        token: "Izgg1AUtqtyzwEWxQcRIxm2rBSXPXxRv",
+      })
       .then((response) => response.data)
-      .then((data) => setAuthors(data));
+      .then((data) => setUsers(data));
   }, [navigate]);
   function turkishToLower(e) {
     let string = e;
@@ -35,33 +37,37 @@ export default function FavoriteAuthors() {
             type="text"
             className="form-control mb-3"
             style={{ width: "min(250px, 100vw)" }}
-            placeholder="Yazar ara"
+            placeholder="Kullanıcı ara"
             onChange={(e) => setSearch(e.target.value)}
           />
           <div className="row">
-            {authors
-              ?.filter((author) =>
-                turkishToLower(author.name)
+            {users
+              ?.filter((user) =>
+                turkishToLower(user.name)
                   .trim()
                   .includes(turkishToLower(search).trim())
               )
-              .map((author) => {
+              .map((user) => {
                 return (
                   <div
-                    key={author.author_id}
+                    key={user.user_id}
                     className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
                   >
-                    <Link to={"/author/" + author.author_id} className="author">
+                    <Link
+                      to={"/admin/edituser/" + user.user_id}
+                      className="user"
+                    >
                       <div className="card">
                         <div className="card-img-top mt-3">
                           <img
-                            alt="author_photo"
-                            src={"/api/author/photo/" + author.author_id}
+                            alt="user_photo"
+                            src={"/api/user/photo/" + user.user_id}
                             className="image"
                           />
                         </div>
+
                         <div className="card-body">
-                          <h5 className="card-title">{author.name}</h5>
+                          <h5 className="card-title">{user.name}</h5>
                         </div>
                       </div>
                     </Link>

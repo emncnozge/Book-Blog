@@ -200,10 +200,30 @@ export default function Navbar() {
                 color="#999"
               ></img>
               <div className="dropdowncontent">
+                <div
+                  style={{
+                    cursor: "auto",
+                    textAlign: "center",
+                    marginTop: ".4rem",
+                  }}
+                >
+                  Admin
+                  <hr style={{ margin: 0, marginTop: "5px" }} />
+                </div>
+                {localStorage.getItem("isAdmin") ? (
+                  <>
+                    <Link to="/admin/users">Kullanıcılar</Link>
+                    <Link to="/admin/books">Kitaplar</Link>
+                    <Link to="/admin/authors">Yazarlar</Link>
+                  </>
+                ) : (
+                  <></>
+                )}
                 <Link to="/profile">Profil</Link>
                 <Link to="/favoritebooks">Favori Kitaplar</Link>
                 <Link to="/favoriteauthors">Favori Yazarlar</Link>
                 <Link to="/favoriteusers">Favori Kullanıcılar</Link>
+
                 <Link to="/login" onClick={handleLogout}>
                   Çıkış Yap
                 </Link>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { HeartFill, Heart } from "react-bootstrap-icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-export default function Book() {
+export default function Author() {
   const navigate = useNavigate();
   const [about, setAbout] = useState("");
   const [name, setName] = useState("");

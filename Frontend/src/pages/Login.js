@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../img/logo.png";
 import Modal from "react-bootstrap/Modal";
-export default function Navbar() {
+export default function Login() {
   const axios = require("axios");
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -101,7 +101,7 @@ export default function Navbar() {
               .then(function (response) {
                 window.localStorage.setItem("user_id", response.data.user_id);
                 window.localStorage.setItem("name", response.data.name);
-                window.localStorage.setItem("is_admin", response.data.is_admin);
+                window.localStorage.setItem("isAdmin", response.data.is_admin);
               })
               .catch(function (error) {
                 console.log(error);

@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-export default function FavoriteAuthors() {
-  const [authors, setAuthors] = useState([]);
+import Navbar from "../../../components/Navbar";
+export default function Books() {
+  const navigate = useNavigate();
+  const [books, setBooks] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [search, setSearch] = useState("");
-  const navigate = useNavigate();
+
   useEffect(() => {
     setLoggedIn(window.localStorage.getItem("loggedIn"));
     if (!window.localStorage.getItem("loggedIn"))
       navigate("login", { replace: true });
+
     const axios = require("axios");
     axios
-      .get(
-        "/api/favoriteauthor/?user_id=" + window.localStorage.getItem("user_id")
-      )
+      .get("/api/book")
       .then((response) => response.data)
-      .then((data) => setAuthors(data));
+      .then((data) => setBooks(data));
   }, [navigate]);
   function turkishToLower(e) {
     let string = e;
@@ -35,33 +35,37 @@ export default function FavoriteAuthors() {
             type="text"
             className="form-control mb-3"
             style={{ width: "min(250px, 100vw)" }}
-            placeholder="Yazar ara"
+            placeholder="Kitap ara"
             onChange={(e) => setSearch(e.target.value)}
           />
           <div className="row">
-            {authors
-              ?.filter((author) =>
-                turkishToLower(author.name)
+            {books
+              ?.filter((book) =>
+                turkishToLower(book.name)
                   .trim()
                   .includes(turkishToLower(search).trim())
               )
-              .map((author) => {
+              .map((book) => {
                 return (
                   <div
-                    key={author.author_id}
+                    key={book.book_id}
                     className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
                   >
-                    <Link to={"/author/" + author.author_id} className="author">
+                    <Link
+                      to={"/admin/editbook/" + book.book_id}
+                      className="book"
+                    >
                       <div className="card">
                         <div className="card-img-top mt-3">
                           <img
-                            alt="author_photo"
-                            src={"/api/author/photo/" + author.author_id}
+                            alt="book_photo"
+                            src={"/api/book/photo/" + book.book_id}
                             className="image"
                           />
                         </div>
+
                         <div className="card-body">
-                          <h5 className="card-title">{author.name}</h5>
+                          <h5 className="card-title">{book.name}</h5>
                         </div>
                       </div>
                     </Link>
