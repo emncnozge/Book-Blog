@@ -19,6 +19,9 @@ import AdminAddBook from "./pages/Admin/Books/AddBook";
 import AdminEditBook from "./pages/Admin/Books/EditBook/[id]";
 import AdminUsers from "./pages/Admin/Users/Users";
 import AdminEditUser from "./pages/Admin/Users/EditUser/[id]";
+import AddEntry from "./pages/Entry/AddEntry";
+import Entry from "./pages/Entry/[id]";
+import EditEntry from "./pages/Entry/EditEntry";
 import User from "./pages/User/[id]";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -41,12 +44,14 @@ root.render(
       <Route path="/user/:id" element={<User />} />
       <Route path="/admin/authors" element={<AdminAuthors />} />
       <Route path="/admin/addauthor/" element={<AdminAddAuthor />} />
-      <Route path="/admin/editauthor/:id" element={<AdminEditAuthor />} />{" "}
+      <Route path="/admin/editauthor/:id" element={<AdminEditAuthor />} />
       <Route path="/admin/books" element={<AdminBooks />} />
       <Route path="/admin/addbook/" element={<AdminAddBook />} />
-      <Route path="/admin/editbook/:id" element={<AdminEditBook />} />{" "}
+      <Route path="/admin/editbook/:id" element={<AdminEditBook />} />
       <Route path="/admin/users" element={<AdminUsers />} />
-      <Route path="/admin/edituser/:id" element={<AdminEditUser />} />
+      <Route path="/addentry/:id" element={<AddEntry />} />
+      <Route path="/book/:id/entry/:id" element={<Entry />} />
+      <Route path="/book/:id/editentry/:id" element={<EditEntry />} />
       <Route path="*" element={<MainPage />} />
     </Routes>
   </Router>

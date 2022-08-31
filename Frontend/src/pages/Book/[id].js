@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { HeartFill, Heart } from "react-bootstrap-icons";
-import { useNavigate, useLocation } from "react-router-dom";
+import { HeartFill, Heart, Plus } from "react-bootstrap-icons";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 export default function Book() {
   const navigate = useNavigate();
@@ -98,15 +98,22 @@ export default function Book() {
         <Navbar />
         <div className="container-fluid">
           <p className="baslik">{name}</p>
+          <Link to={"/addentry/" + book_id} className="btn add ms-4">
+            <Plus size={40}></Plus>
+          </Link>
           <button
             id="favorite"
             className="btn favorite"
             onClick={handleFavorite}
           >
             {favorite ? (
-              <HeartFill style={{ marginBottom: "4px" }}></HeartFill>
+              <HeartFill
+                style={{ marginBottom: "4px", marginRight: "1px" }}
+              ></HeartFill>
             ) : (
-              <Heart style={{ marginBottom: "4px" }}></Heart>
+              <Heart
+                style={{ marginBottom: "4px", marginRight: "1px" }}
+              ></Heart>
             )}
           </button>
           <div className="row">

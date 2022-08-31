@@ -160,9 +160,7 @@ code {
   color: #FF5722
 }
 
-.leftBar {
-  height: calc(100vh - 80px - 3rem) !important;
-}
+
 
 .underPhoto {
   font-size: 15pt;
@@ -216,7 +214,8 @@ code {
   justify-content: flex-end;
 }
 
-.favorite {
+.favorite,
+.add {
   float: right;
   display: flex;
   border: 1px solid #eee !important;
@@ -228,9 +227,40 @@ code {
   text-align: center;
   font-size: 21pt !important;
   color: #FF5722 !important;
-  transition: .1s ease !important;
+  transition: .3s ease !important;
+}
+
+.add {
+  color: green !important;
+}
+
+.add:hover {
+  box-shadow: 0 0 5px 1px green;
 }
 
 .favorite:hover {
   font-size: 23pt !important;
+  box-shadow: 0 0 5px 1px #FF5722;
+}
+
+.label {
+  font-size: 14pt;
+  margin-bottom: .5rem;
+  margin-left: .1rem;
+}
+
+.icerik {
+  height: 30vh;
+}
+
+.entryAuthor {
+  text-decoration: none;
+  float: right;
+  opacity: .7;
+  font-size: 14pt;
+  color: black;
+}
+
+.entryAuthor:hover {
+  color: black;
 }

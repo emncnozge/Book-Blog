@@ -200,18 +200,18 @@ export default function Navbar() {
                 color="#999"
               ></img>
               <div className="dropdowncontent">
-                <div
-                  style={{
-                    cursor: "auto",
-                    textAlign: "center",
-                    marginTop: ".4rem",
-                  }}
-                >
-                  Admin
-                  <hr style={{ margin: 0, marginTop: "5px" }} />
-                </div>
-                {localStorage.getItem("isAdmin") ? (
+                {localStorage.getItem("isAdmin") === true ? (
                   <>
+                    <div
+                      style={{
+                        cursor: "auto",
+                        textAlign: "center",
+                        marginTop: ".4rem",
+                      }}
+                    >
+                      Admin
+                      <hr style={{ margin: 0, marginTop: "5px" }} />
+                    </div>
                     <Link to="/admin/users">Kullanıcılar</Link>
                     <Link to="/admin/books">Kitaplar</Link>
                     <Link to="/admin/authors">Yazarlar</Link>
