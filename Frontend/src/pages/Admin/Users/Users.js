@@ -58,7 +58,7 @@ export default function Users() {
                       className="user"
                     >
                       <div className="card">
-                        <div className="card-img-top mt-3">
+                        <div className="img-top">
                           <img
                             alt="user_photo"
                             src={"/api/user/photo/" + user.user_id}

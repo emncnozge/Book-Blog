@@ -21,13 +21,7 @@ export default function EditEntry() {
         header: header,
         entry: entry,
       })
-      .then(
-        (window.location.pathname =
-          "/book/" +
-          location.pathname.split("/")[2] +
-          "/entry/" +
-          location.pathname.split("/")[4])
-      );
+      .then(navigate(-1));
   };
   useEffect(() => {
     setLoggedIn(window.localStorage.getItem("loggedIn"));
@@ -63,7 +57,7 @@ export default function EditEntry() {
           <p className="baslik">{name}</p>
 
           <div className="row">
-            <div className="d-table-cell my-auto p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
+            <div className="d-table-cell p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
               <div>
                 <img
                   alt="book"
@@ -76,7 +70,7 @@ export default function EditEntry() {
                 />
               </div>
             </div>
-            <div className="col-12 col-sm-7 col-md-8">
+            <div className="col-12 col-sm-7 col-md-8 rightSide">
               <label htmlFor="baslik" className="label">
                 Başlık:
               </label>

@@ -25,10 +25,10 @@ public class FavoriteUserController {
         return favoriteUserService.getFavoriteUsers(user_id);
     }
 
-    @GetMapping(path = "isfavoritebook")
+    @GetMapping(path = "isfavoriteuser")
     public boolean getFavoriteUser(@RequestParam(required = false) Long user_id,
-                                   @RequestParam(required = false) Long favorite_book_id) {
-        return favoriteUserService.getFavoriteUser(user_id, favorite_book_id);
+                                   @RequestParam(required = false) Long favorite_user_id) {
+        return favoriteUserService.getFavoriteUser(user_id, favorite_user_id);
     }
 
     @PostMapping

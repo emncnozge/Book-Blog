@@ -32,7 +32,7 @@ export default function MainPage() {
                 >
                   <Link to={"/book/" + book.book_id} className="book">
                     <div className="card">
-                      <div className="card-img-top mt-3">
+                      <div className="img-top">
                         <img
                           alt="book_photo"
                           src={"/api/book/photo/" + book.book_id}

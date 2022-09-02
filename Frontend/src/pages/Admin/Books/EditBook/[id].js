@@ -85,7 +85,7 @@ export default function Author() {
         <Navbar />
         <div className="container-fluid">
           <div className="row">
-            <div className="d-table-cell my-auto p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
+            <div className="d-table-cell p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
               <div>
                 <img
                   alt="book"
@@ -128,7 +128,7 @@ export default function Author() {
                 </form>
               </div>
             </div>
-            <div className="col-12 col-sm-7 col-md-8">
+            <div className="col-12 col-sm-7 col-md-8 rightSide">
               <div className="about mb-3">Kitap Adı</div>
               <input
                 type="text"

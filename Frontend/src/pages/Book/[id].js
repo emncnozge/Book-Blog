@@ -9,6 +9,7 @@ export default function Book() {
   const [book_id, setBook_id] = useState(0);
   const [loggedIn, setLoggedIn] = useState(false);
   const [favorite, setFavorite] = useState(false);
+  const [entries, setEntries] = useState([]);
   const location = useLocation();
 
   const handleFavorite = () => {
@@ -36,12 +37,12 @@ export default function Book() {
           console.log(error);
         });
     } else {
-      var data = JSON.stringify({
+      data = JSON.stringify({
         userid: window.localStorage.getItem("user_id"),
         favoritebookid: location.pathname.split("/")[2],
       });
 
-      var config = {
+      config = {
         method: "post",
         url: "/api/favoritebook/delete",
         headers: {
@@ -59,6 +60,47 @@ export default function Book() {
         });
     }
   };
+
+  const handleEntries = async () => {
+    const axios = require("axios");
+    axios
+      .get(
+        "/api/entry/getTop5ByBookId?book_id=" + location.pathname.split("/")[2]
+      )
+      .then(async (response) => {
+        var newEntries = response.data;
+        for (let i = 0; i < newEntries.length; i++) {
+          await axios
+            .post("/api/user/getUser", {
+              user_id: newEntries[i].userid,
+              token: "Izgg1AUtqtyzwEWxQcRIxm2rBSXPXxRv",
+            })
+            .then((response2) => {
+              newEntries[i].name = response2.data.name;
+            });
+        }
+        setEntries(response.data);
+      });
+  };
+  const isFavorite = () => {
+    const axios = require("axios");
+    axios
+      .get(
+        "/api/favoritebook/isfavoritebook?user_id=" +
+          window.localStorage.getItem("user_id") +
+          "&favorite_book_id=" +
+          location.pathname.split("/")[2]
+      )
+      .then(function (response) {
+        setFavorite(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  function handleNavigate(bookid, entryid) {
+    navigate("/book/" + bookid + "/entry/" + entryid);
+  }
   useEffect(() => {
     setLoggedIn(window.localStorage.getItem("loggedIn"));
     if (!window.localStorage.getItem("loggedIn"))
@@ -77,19 +119,8 @@ export default function Book() {
       .catch(function (error) {
         console.log(error);
       });
-    axios
-      .get(
-        "/api/favoritebook/isfavoritebook?user_id=" +
-          window.localStorage.getItem("user_id") +
-          "&favorite_book_id=" +
-          location.pathname.split("/")[2]
-      )
-      .then(function (response) {
-        setFavorite(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    isFavorite();
+    handleEntries();
   }, [navigate, location.pathname]);
 
   if (loggedIn)
@@ -117,7 +148,7 @@ export default function Book() {
             )}
           </button>
           <div className="row">
-            <div className="d-table-cell my-auto p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
+            <div className="d-table-cell p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
               <div>
                 <img
                   alt="book"
@@ -130,9 +161,39 @@ export default function Book() {
                 />
               </div>
             </div>
-            <div className="col-12 col-sm-7 col-md-8">
+            <div className="col-12 col-sm-7 col-md-8 rightSide">
               <div className="about">Kitap Hakkında</div>
               <p className="aboutIcerik">{about}</p>
+              {entries?.length > 0 ? (
+                <>
+                  <div className="about mt-4 mb-0">Son Blog Gönderileri</div>
+                  <div className="all mb-2">
+                    <Link
+                      to={
+                        "/book/" + location.pathname.split("/")[2] + "/entries"
+                      }
+                      className="all"
+                    >
+                      Tüm Gönderileri Gör
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+              {entries?.map((entry) => {
+                return (
+                  <div
+                    key={entry.entry_id}
+                    className="entryCard mb-3"
+                    onClick={() => handleNavigate(entry.bookid, entry.entry_id)}
+                  >
+                    <div className="ellipsis header">{entry.header}</div>
+                    <div className="ellipsis">{entry.entry}</div>
+                    <div className="ellipsis name">- {entry.name}</div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

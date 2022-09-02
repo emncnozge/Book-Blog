@@ -55,7 +55,7 @@ export default function Authors() {
                       className="author"
                     >
                       <div className="card">
-                        <div className="card-img-top mt-3">
+                        <div className="img-top">
                           <img
                             alt="author_photo"
                             src={"/api/author/photo/" + author.author_id}

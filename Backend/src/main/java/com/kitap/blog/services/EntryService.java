@@ -17,8 +17,16 @@ public class EntryService {
         this.entryRepository = entryRepository;
     }
 
-    public List<Entry> getEntries(Long book_id) {
+    public List<Entry> getEntriesByBookid(Long book_id) {
         return entryRepository.getEntriesByBookid(book_id);
+    }
+
+    public List<Entry> findTop5ByBookidOrderByCreatedOnDesc(Long book_id) {
+        return entryRepository.findTop5ByBookidOrderByCreatedOnDesc(book_id);
+    }
+
+    public List<Entry> getEntriesByUserid(Long user_id) {
+        return entryRepository.getEntriesByUserid(user_id);
     }
 
     public Optional<Entry> getEntry(Long entry_id) {

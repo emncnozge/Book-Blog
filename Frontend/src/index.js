@@ -26,6 +26,7 @@ import User from "./pages/User/[id]";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
+import Entries from "./pages/Entry/Entries/[id]";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -52,6 +53,7 @@ root.render(
       <Route path="/addentry/:id" element={<AddEntry />} />
       <Route path="/book/:id/entry/:id" element={<Entry />} />
       <Route path="/book/:id/editentry/:id" element={<EditEntry />} />
+      <Route path="/book/:id/entries/" element={<Entries />} />
       <Route path="*" element={<MainPage />} />
     </Routes>
   </Router>

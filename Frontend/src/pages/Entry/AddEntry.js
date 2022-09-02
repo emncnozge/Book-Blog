@@ -15,12 +15,14 @@ export default function AddEntry() {
   const handleEntry = (e) => setEntry(e.target.value);
 
   const save = () => {
-    axios.post("/api/entry", {
-      bookid: location.pathname.split("/")[2],
-      userid: window.localStorage.getItem("user_id"),
-      header: header,
-      entry: entry,
-    });
+    axios
+      .post("/api/entry", {
+        bookid: location.pathname.split("/")[2],
+        userid: window.localStorage.getItem("user_id"),
+        header: header,
+        entry: entry,
+      })
+      .then(navigate(-1));
   };
   useEffect(() => {
     setLoggedIn(window.localStorage.getItem("loggedIn"));
@@ -49,7 +51,7 @@ export default function AddEntry() {
           <p className="baslik">{name}</p>
 
           <div className="row">
-            <div className="d-table-cell my-auto p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
+            <div className="d-table-cell p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
               <div>
                 <img
                   alt="book"
@@ -62,7 +64,7 @@ export default function AddEntry() {
                 />
               </div>
             </div>
-            <div className="col-12 col-sm-7 col-md-8">
+            <div className="col-12 col-sm-7 col-md-8 rightSide">
               <label htmlFor="baslik" className="label">
                 Başlık:
               </label>

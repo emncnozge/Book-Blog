@@ -15,7 +15,7 @@ export default function FavoriteUsers() {
     const axios = require("axios");
     axios
       .get(
-        "/api/favoriteuser/?user_id=" + window.localStorage.getItem("user_id")
+        "/api/favoriteuser?user_id=" + window.localStorage.getItem("user_id")
       )
       .then((response) => response.data)
       .then((data) => setUsers(data));
@@ -55,7 +55,7 @@ export default function FavoriteUsers() {
                   >
                     <Link to={"/user/" + user.user_id} className="user">
                       <div className="card">
-                        <div className="card-img-top mt-3">
+                        <div className="img-top">
                           <img
                             alt="user_photo"
                             src={"/api/user/photo/" + user.user_id}

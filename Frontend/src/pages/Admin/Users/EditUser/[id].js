@@ -50,7 +50,7 @@ export default function Profile() {
       .catch(function (error) {
         console.log(error);
       });
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
   const handleName = (e) => setName(e.target.value);
   const handleEmail = (e) => setEmail(e.target.value);
@@ -84,7 +84,7 @@ export default function Profile() {
         <Navbar />
         <div className="container-fluid">
           <div className="row ">
-            <div className="d-table-cell my-auto p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
+            <div className="d-table-cell p-4 col-12 col-sm-4 col-md-3 leftBar align-items-center justify-items-center">
               <div>
                 <div className="underPhoto mb-2 ">Profil Fotoğrafı</div>
                 <img
@@ -129,7 +129,7 @@ export default function Profile() {
                 </form>
               </div>
             </div>
-            <div className="col-12 col-sm-7 col-md-8">
+            <div className="col-12 col-sm-7 col-md-8 rightSide">
               <div className="underPhoto">Kişisel Bilgiler</div>
 
               <p className="my-auto label">Ad-Soyad</p>

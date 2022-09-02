@@ -9,4 +9,8 @@ import java.util.List;
 @Repository
 public interface EntryRepository extends JpaRepository<Entry, Long> {
     List<Entry> getEntriesByBookid(Long bookid);
+
+    List<Entry> findTop5ByBookidOrderByCreatedOnDesc(Long bookid);
+
+    List<Entry> getEntriesByUserid(Long userid);
 }

@@ -53,7 +53,7 @@ export default function FavoriteAuthors() {
                   >
                     <Link to={"/author/" + author.author_id} className="author">
                       <div className="card">
-                        <div className="card-img-top mt-3">
+                        <div className="img-top">
                           <img
                             alt="author_photo"
                             src={"/api/author/photo/" + author.author_id}

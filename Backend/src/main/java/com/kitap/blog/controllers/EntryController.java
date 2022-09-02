@@ -21,9 +21,19 @@ public class EntryController {
         this.entryService = entryService;
     }
 
-    @GetMapping
-    public List<Entry> getEntries(@RequestParam Long book_id) {
-        return entryService.getEntries(book_id);
+    @GetMapping("getByBookId")
+    public List<Entry> getEntriesByBookid(@RequestParam Long book_id) {
+        return entryService.getEntriesByBookid(book_id);
+    }
+
+    @GetMapping("getTop5ByBookId")
+    public List<Entry> findTop5ByBookidOrderByCreatedOnDesc(@RequestParam Long book_id) {
+        return entryService.findTop5ByBookidOrderByCreatedOnDesc(book_id);
+    }
+
+    @GetMapping("getByUserId")
+    public List<Entry> getEntriesByUserid(@RequestParam Long user_id) {
+        return entryService.getEntriesByUserid(user_id);
     }
 
     @GetMapping(path = "getEntry")
