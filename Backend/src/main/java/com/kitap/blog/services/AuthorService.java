@@ -46,11 +46,9 @@ public class AuthorService {
 
     public boolean deleteAuthor(Long author_id) {
         try {
-            boolean exists = authorRepository.existsById(author_id);
-            if (exists) {
-                authorRepository.deleteById(author_id);
-                return true;
-            } else return false;
+            authorRepository.deleteById(author_id);
+            return true;
+
 
         } catch (Exception e) {
             System.out.println("Hata!");
@@ -60,65 +58,62 @@ public class AuthorService {
 
     @Transactional
     public boolean updateAuthor(Long author_id, String name, String about, String photo_url) {
-        boolean exists = authorRepository.existsById(author_id);
-        if (exists) {
-            if (name.equals("null")) name = null;
-            if (about.equals("null")) about = null;
-            if (photo_url.equals("null")) photo_url = null;
-            Author author = authorRepository.findById(author_id).orElseThrow(() -> new IllegalStateException("Error"));
-            if (name != null && name.length() > 0 && !Objects.equals(author.getName(), name)) {
-                author.setName(name);
-            }
-            if (about != null && about.length() > 0 && !Objects.equals(author.getAbout(), about)) {
-                author.setAbout(about);
-            }
-            if (photo_url != null && photo_url.length() > 0 && !Objects.equals(author.getPhoto_url(), photo_url)) {
-                author.setPhoto_url(photo_url);
-            }
-            return true;
-        } else return false;
+        boolean status = false;
+        if (name.equals("null")) name = null;
+        if (about.equals("null")) about = null;
+        if (photo_url.equals("null")) photo_url = null;
+        Author author = authorRepository.findById(author_id).orElseThrow(() -> new IllegalStateException("Error"));
+        if (name != null && name.length() > 0 && !Objects.equals(author.getName(), name)) {
+            author.setName(name);
+            status = true;
+        }
+        if (about != null && about.length() > 0 && !Objects.equals(author.getAbout(), about)) {
+            author.setAbout(about);
+            status = true;
+        }
+        if (photo_url != null && photo_url.length() > 0 && !Objects.equals(author.getPhoto_url(), photo_url)) {
+            author.setPhoto_url(photo_url);
+            status = true;
+        }
+        return status;
     }
 
 
     @Transactional
     public void addAuthorPhoto(Long author_id, MultipartFile multipartFile, HttpServletResponse httpServletResponse) throws IOException {
-        boolean exists = authorRepository.existsById(author_id);
-        if (exists) {
-            Author author = authorRepository.findById(author_id).orElseThrow(() -> new IllegalStateException("Error"));
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename() == null ? "" : multipartFile.getOriginalFilename());
-            String uploadDir = "images/author-photos/" + author_id;
-            author.setPhoto_url(uploadDir + "/" + fileName);
+        Author author = authorRepository.findById(author_id).orElseThrow(() -> new IllegalStateException("Error"));
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename() == null ? "" : multipartFile.getOriginalFilename());
+        String uploadDir = "images/author-photos/" + author_id;
+        author.setPhoto_url(uploadDir + "/" + fileName);
 
-            byte[] bytes = multipartFile.getBytes();
+        byte[] bytes = multipartFile.getBytes();
 
-            File dir = new File(uploadDir);
-            if (!dir.exists())
-                dir.mkdirs();
+        File dir = new File(uploadDir);
+        if (!dir.exists())
+            dir.mkdirs();
 
-            File serverFile = new File(dir.getAbsolutePath()
-                    + File.separator + fileName);
-            BufferedOutputStream stream = new BufferedOutputStream(
-                    new FileOutputStream(serverFile));
-            stream.write(bytes);
-            stream.close();
-        }
+        File serverFile = new File(dir.getAbsolutePath()
+                + File.separator + fileName);
+        BufferedOutputStream stream = new BufferedOutputStream(
+                new FileOutputStream(serverFile));
+        stream.write(bytes);
+        stream.close();
+
         httpServletResponse.sendRedirect("http://localhost:3000/admin/editauthor/" + author_id);
     }
 
     public InputStreamResource getAuthorPhoto(Long author_id, HttpServletResponse response) throws IOException {
-        boolean exists = authorRepository.existsById(author_id);
-        if (exists) {
-            Author author = authorRepository.findById(author_id).orElseThrow(() -> new IllegalStateException("Error"));
-            Resource resource1 = new PathResource(author.getPhoto_url());
-            response.setContentType("image/png");
-            try {
-                return new InputStreamResource(new FileInputStream(resource1.getFile()));
-            } catch (Exception e) {
-                resource1 = new PathResource("images/author-photos/default.png");
-                response.setContentType("image/png");
-                return new InputStreamResource(new FileInputStream(resource1.getFile()));
-            }
 
-        } else return null;
+        Author author = authorRepository.findById(author_id).orElseThrow(() -> new IllegalStateException("Error"));
+        Resource resource1 = new PathResource(author.getPhoto_url());
+        response.setContentType("image/png");
+        try {
+            return new InputStreamResource(new FileInputStream(resource1.getFile()));
+        } catch (Exception e) {
+            resource1 = new PathResource("images/author-photos/default.png");
+            response.setContentType("image/png");
+            return new InputStreamResource(new FileInputStream(resource1.getFile()));
+        }
+
     }
 }
