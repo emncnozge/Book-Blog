@@ -15,6 +15,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findBooksByGenre(String genre);
 
     @Query("select distinct b.genre from book b")
-    List<Object> getGenres();
+    List<String> getGenres();
 
 }

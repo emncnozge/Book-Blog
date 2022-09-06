@@ -46,12 +46,8 @@ public class EntryService {
     @Transactional
     public boolean deleteEntry(Long entry_id) {
         try {
-            boolean exists = entryRepository.existsById(entry_id);
-            if (exists) {
-                entryRepository.deleteById(entry_id);
-                return true;
-            } else
-                return false;
+            entryRepository.deleteById(entry_id);
+            return true;
 
         } catch (Exception e) {
             System.out.println(e);
@@ -61,21 +57,18 @@ public class EntryService {
 
     @Transactional
     public boolean updateEntry(Long entry_id, String header, String entryContext) {
-        boolean exists = entryRepository.existsById(entry_id);
-        if (exists) {
-            if (header.equals("null")) header = null;
-            if (entryContext.equals("null")) entryContext = null;
-            Entry entry = entryRepository.findById(entry_id).orElseThrow(() -> new IllegalStateException("Error"));
-            if (header != null && header.length() > 0 && !Objects.equals(entry.getHeader(), header)) {
-                entry.setHeader(header);
-            }
-            if (entryContext != null && entryContext.length() > 0 && !Objects.equals(entry.getEntry(), entryContext)) {
-                entry.setEntry(entryContext);
-            }
-            return true;
-        } else
-            return false;
+
+        if (header.equals("null"))
+            header = null;
+        if (entryContext.equals("null"))
+            entryContext = null;
+        Entry entry = entryRepository.findById(entry_id).orElseThrow(() -> new IllegalStateException("Error"));
+        if (header != null && header.length() > 0 && !Objects.equals(entry.getHeader(), header)) {
+            entry.setHeader(header);
+        }
+        if (entryContext != null && entryContext.length() > 0 && !Objects.equals(entry.getEntry(), entryContext)) {
+            entry.setEntry(entryContext);
+        }
+        return true;
     }
 }
-
-

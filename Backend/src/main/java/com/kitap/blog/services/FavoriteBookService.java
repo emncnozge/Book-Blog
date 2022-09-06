@@ -26,7 +26,8 @@ public class FavoriteBookService {
     public boolean addFavoriteBook(FavoriteBook favoriteBook) {
         try {
 
-            if (!favoriteBookRepository.existsFavoriteBookByUseridAndFavoritebookid(favoriteBook.getUserid(), favoriteBook.getFavoritebookid())) {
+            if (!favoriteBookRepository.existsFavoriteBookByUseridAndFavoritebookid(favoriteBook.getUserid(),
+                    favoriteBook.getFavoritebookid())) {
                 favoriteBookRepository.saveAndFlush(favoriteBook);
                 return true;
             }
@@ -40,12 +41,8 @@ public class FavoriteBookService {
     @Transactional
     public boolean deleteFavoriteBook(Long user_id, Long favorite_book_id) {
         try {
-            boolean exists = favoriteBookRepository.existsFavoriteBookByUseridAndFavoritebookid(user_id, favorite_book_id);
-            if (exists) {
-                favoriteBookRepository.deleteFavoriteBookByUseridAndFavoritebookid(user_id, favorite_book_id);
-                return true;
-            } else
-                return false;
+            favoriteBookRepository.deleteFavoriteBookByUseridAndFavoritebookid(user_id, favorite_book_id);
+            return true;
 
         } catch (Exception e) {
             System.out.println(e);

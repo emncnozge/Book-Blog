@@ -32,7 +32,11 @@ class AuthorServiceTest {
         Mockito.when(authorRepository.save(author)).thenReturn(author);
         Assertions.assertEquals(author.getAuthor_id(), authorService.addAuthor(author));
     }
-
+    @Test
+    public void getAuthorTest() {
+        Mockito.when(authorRepository.findById(1L)).thenReturn(Optional.of(new Author(1L, "TestName", "TestAbout", "/test_url", new Date(), new Date())));
+        Assertions.assertEquals(authorRepository.findById(1L), Optional.of(authorService.getAuthor(1L)));
+    }
     @Test
     public void getAuthorsTest() {
         Mockito.when(authorRepository.findAll()).thenReturn(Stream
@@ -57,17 +61,17 @@ class AuthorServiceTest {
 
     @Test
     public void addAuthorPhotoTest() throws IOException {
-        Author author = new Author(1L, "TestName", "TestAbout", "", new Date(), new Date());
+        Author author = new Author(0L, "TestName", "TestAbout", "", new Date(), new Date());
         Mockito.doReturn(Optional.of(author)).when(authorRepository).findById(author.getAuthor_id());
         MockMultipartFile mockMultipartFile = new MockMultipartFile("images", "image1", "image/png", AuthorServiceTest.class.getResourceAsStream("/images/image1.png"));
         MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
         authorService.addAuthorPhoto(author.getAuthor_id(), mockMultipartFile, mockHttpServletResponse);
-        Assertions.assertEquals("images/author-photos/1/image1", author.getPhoto_url());
+        Assertions.assertEquals("images/author-photos/0/image1", author.getPhoto_url());
     }
 
     @Test
     public void getAuthorPhotoTest() throws IOException {
-        Author author = new Author(1L, "TestName", "TestAbout", "", new Date(), new Date());
+        Author author = new Author(0L, "TestName", "TestAbout", "", new Date(), new Date());
         Mockito.doReturn(Optional.of(author)).when(authorRepository).findById(author.getAuthor_id());
         MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
         Assertions.assertEquals(authorService.getAuthorPhoto(author.getAuthor_id(), mockHttpServletResponse).contentLength(), 38765);

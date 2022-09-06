@@ -27,7 +27,7 @@ public class FavoriteBookController {
 
     @GetMapping(path = "isfavoritebook")
     public boolean getFavoriteBook(@RequestParam(required = false) Long user_id,
-                                   @RequestParam(required = false) Long favorite_book_id) {
+            @RequestParam(required = false) Long favorite_book_id) {
         return favoriteBookService.getFavoriteBook(user_id, favorite_book_id);
     }
 

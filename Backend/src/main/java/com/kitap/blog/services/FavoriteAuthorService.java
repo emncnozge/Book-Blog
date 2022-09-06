@@ -41,14 +41,8 @@ public class FavoriteAuthorService {
     @Transactional
     public boolean deleteFavoriteAuthor(Long user_id, Long favorite_author_id) {
         try {
-            boolean exists = favoriteAuthorRepository.existsFavoriteAuthorByUseridAndFavoriteauthorid(user_id,
-                    favorite_author_id);
-            if (exists) {
-                favoriteAuthorRepository.deleteFavoriteAuthorByUseridAndFavoriteauthorid(user_id, favorite_author_id);
-                return true;
-            } else
-                return false;
-
+            favoriteAuthorRepository.deleteFavoriteAuthorByUseridAndFavoriteauthorid(user_id, favorite_author_id);
+            return true;
         } catch (Exception e) {
             System.out.println(e);
             return false;
