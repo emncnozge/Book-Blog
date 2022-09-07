@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Card from "../components/Card";
 export default function FavoriteUsers() {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -48,28 +49,7 @@ export default function FavoriteUsers() {
                   .includes(turkishToLower(search).trim())
               )
               .map((user) => {
-                return (
-                  <div
-                    key={user.user_id}
-                    className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
-                  >
-                    <Link to={"/user/" + user.user_id} className="user">
-                      <div className="card">
-                        <div className="img-top">
-                          <img
-                            alt="user_photo"
-                            src={"/api/user/photo/" + user.user_id}
-                            className="image"
-                          />
-                        </div>
-
-                        <div className="card-body">
-                          <h5 className="card-title">{user.name}</h5>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                );
+                return <Card key={user.user_id} type="user" data={user} />;
               })}
           </div>
         </div>

@@ -4,7 +4,6 @@ import Logo from "../img/logo.png";
 import $ from "jquery";
 import Select from "react-select";
 import Overlay from "react-bootstrap/Overlay";
-
 export default function Navbar() {
   const [name, setName] = useState("");
   const [user_id, setUser_id] = useState("");

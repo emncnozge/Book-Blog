@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Card from "../components/Card";
 export default function Authors() {
   const [authors, setAuthors] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -45,25 +46,7 @@ export default function Authors() {
               )
               .map((author) => {
                 return (
-                  <div
-                    key={author.author_id}
-                    className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
-                  >
-                    <Link to={"/author/" + author.author_id} className="author">
-                      <div className="card">
-                        <div className="img-top">
-                          <img
-                            alt="author_photo"
-                            src={"/api/author/photo/" + author.author_id}
-                            className="image"
-                          />
-                        </div>
-                        <div className="card-body">
-                          <h5 className="card-title">{author.name}</h5>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
+                  <Card key={author.author_id} type="author" data={author} />
                 );
               })}
           </div>
