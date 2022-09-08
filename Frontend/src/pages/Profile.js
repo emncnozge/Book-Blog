@@ -157,14 +157,14 @@ export default function Profile() {
                   onClick={save}
                 />
               </div>
-              <div className="mt-2 mb-4">
+              {/* <div className="mt-2 mb-4">
                 <input
                   type="button"
                   className="btn btn-danger"
                   value="Hesabı sil"
                   onClick={deleteAccount}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

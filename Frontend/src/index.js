@@ -50,6 +50,7 @@ root.render(
       <Route path="/admin/addbook/" element={<AdminAddBook />} />
       <Route path="/admin/editbook/:id" element={<AdminEditBook />} />
       <Route path="/admin/users" element={<AdminUsers />} />
+      <Route path="/admin/edituser/:id" element={<AdminEditUser />} />
       <Route path="/addentry/:id" element={<AddEntry />} />
       <Route path="/book/:id/entry/:id" element={<Entry />} />
       <Route path="/book/:id/editentry/:id" element={<EditEntry />} />

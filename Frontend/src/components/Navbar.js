@@ -199,7 +199,7 @@ export default function Navbar() {
                 color="#999"
               ></img>
               <div className="dropdowncontent">
-                {localStorage.getItem("isAdmin") === true ? (
+                {localStorage.getItem("isAdmin") ? (
                   <>
                     <div
                       style={{
@@ -213,7 +213,10 @@ export default function Navbar() {
                     </div>
                     <Link to="/admin/users">Kullanıcılar</Link>
                     <Link to="/admin/books">Kitaplar</Link>
+                    <Link to="/admin/addbook">Kitap Ekle</Link>
                     <Link to="/admin/authors">Yazarlar</Link>
+                    <Link to="/admin/addauthor">Yazar Ekle</Link>
+                    <hr style={{ margin: 0, marginTop: "5px" }} />
                   </>
                 ) : (
                   <></>
