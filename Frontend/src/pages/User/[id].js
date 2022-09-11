@@ -32,7 +32,6 @@ export default function User() {
           location.pathname.split("/")[2]
       )
       .then(function (response) {
-        console.log(response.data);
         setFavorite(response.data);
       })
       .catch(function (error) {

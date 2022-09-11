@@ -199,7 +199,7 @@ export default function Navbar() {
                 color="#999"
               ></img>
               <div className="dropdowncontent">
-                {localStorage.getItem("isAdmin") ? (
+                {window.localStorage.getItem("isAdmin") == true ? (
                   <>
                     <div
                       style={{
