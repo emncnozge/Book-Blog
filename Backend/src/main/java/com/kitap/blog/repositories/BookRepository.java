@@ -16,5 +16,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("select distinct b.genre from book b")
     List<String> getGenres();
+    @Query("select b from book b where b.author_id=:author_id")
+    List<Object> findBooksByAuthorId(Long author_id);
 
 }

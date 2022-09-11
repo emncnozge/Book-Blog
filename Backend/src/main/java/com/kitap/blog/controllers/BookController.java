@@ -58,6 +58,14 @@ public class BookController {
         return bookService.getBooksByGenre(body.get("genre").toString());
     }
 
+    @PostMapping(path = "getBooksByAuthorId")
+    public Object getBooksByAuthorId(@RequestBody Map<String, Object> body) {
+        if (body.get("author_id") == null) {
+            return null;
+        }
+        return bookService.getBooksByAuthorId(Long.valueOf(body.get("author_id").toString()));
+    }
+
     @PostMapping
     public Long addBook(@RequestBody Book book) {
         return bookService.addBook(book);

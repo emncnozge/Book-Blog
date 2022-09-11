@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import { HeartFill, Heart } from "react-bootstrap-icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar";
+import Card from "../../components/Card";
 export default function Author() {
   const navigate = useNavigate();
   const [about, setAbout] = useState("");
+  const [books, setBooks] = useState([]);
   const [name, setName] = useState("");
   const [author_id, setAuthor_id] = useState(0);
   const [loggedIn, setLoggedIn] = useState(false);
   const [favorite, setFavorite] = useState(false);
   const location = useLocation();
+  const [search, setSearch] = useState("");
+
   const handleFavorite = () => {
     const axios = require("axios");
     if (!favorite) {
@@ -76,6 +80,17 @@ export default function Author() {
       .catch(function (error) {
         console.log(error);
       });
+    axios
+      .post("/api/book/getBooksByAuthorId", {
+        author_id: location.pathname.split("/")[2],
+      })
+      .then(function (response) {
+        console.log(response.data);
+        setBooks(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
     axios
       .get(
@@ -91,7 +106,14 @@ export default function Author() {
         console.log(error);
       });
   }, [navigate, location.pathname]);
-
+  function turkishToLower(e) {
+    let string = e;
+    let letters = { İ: "i", I: "ı", Ş: "ş", Ğ: "ğ", Ü: "ü", Ö: "ö", Ç: "ç" };
+    string = string.replace(/(([İIŞĞÜÇÖ]))/g, function (letter) {
+      return letters[letter];
+    });
+    return string.toLowerCase();
+  }
   if (loggedIn)
     return (
       <>
@@ -126,6 +148,25 @@ export default function Author() {
             <div className="col-12 col-sm-7 col-md-8 rightSide">
               <div className="about">Yazar Hakkında</div>
               <p className="aboutIcerik">{about}</p>
+            </div>
+            <div className="about">Kitaplar</div>
+            <input
+              type="text"
+              className="form-control mb-3"
+              style={{ width: "min(250px, 100vw)" }}
+              placeholder="Kitap ara"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <div className="row">
+              {books
+                ?.filter((book) =>
+                  turkishToLower(book.name)
+                    .trim()
+                    .includes(turkishToLower(search).trim())
+                )
+                .map((book) => {
+                  return <Card key={book.book_id} type="book" data={book} />;
+                })}
             </div>
           </div>
         </div>

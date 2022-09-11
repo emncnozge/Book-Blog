@@ -30,6 +30,9 @@ public class BookService {
     public List<Book> getLast20Books() {
         return bookRepository.findTop20ByOrderByCreatedOnDesc();
     }
+    public List<Object> getBooksByAuthorId(Long author_id) {
+        return bookRepository.findBooksByAuthorId(author_id);
+    }
 
     public Book getBook(Long user_id) {
         return bookRepository.findById(user_id)
@@ -119,7 +122,7 @@ public class BookService {
         stream.write(bytes);
         stream.close();
 
-        httpServletResponse.sendRedirect("http://127.0.0.1:3000/admin/editbook/" + book_id);
+        httpServletResponse.sendRedirect("http://localhost:3000/admin/editbook/" + book_id);
     }
 
     public InputStreamResource getBookPhoto(Long book_id, HttpServletResponse response) throws IOException {

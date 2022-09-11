@@ -99,7 +99,7 @@ public class AuthorService {
         stream.write(bytes);
         stream.close();
 
-        httpServletResponse.sendRedirect("http://127.0.0.1:3000/admin/editauthor/" + author_id);
+        httpServletResponse.sendRedirect("http://localhost:3000/admin/editauthor/" + author_id);
     }
 
     public InputStreamResource getAuthorPhoto(Long author_id, HttpServletResponse response) throws IOException {

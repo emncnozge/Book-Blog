@@ -21,7 +21,7 @@ public class Book {
     @Column(name = "author_id", nullable = false)
     private Long author_id;
 
-    @Column(name = "about", nullable = false)
+    @Column(name = "about", nullable = false, columnDefinition = "TEXT")
     private String about;
 
     @Column(name = "photo_url", nullable = true)

@@ -21,7 +21,14 @@ export default function EditEntry() {
         header: header,
         entry: entry,
       })
-      .then(navigate(-1));
+      .then(
+        navigate(
+          "/book/" +
+            location.pathname.split("/")[2] +
+            "/entry/" +
+            location.pathname.split("/")[4]
+        )
+      );
   };
   useEffect(() => {
     setLoggedIn(window.localStorage.getItem("loggedIn"));

@@ -22,7 +22,9 @@ export default function AddEntry() {
         header: header,
         entry: entry,
       })
-      .then(navigate(-1));
+      .then((window.location = "/book/" + location.pathname.split("/")[2]), {
+        replace: true,
+      });
   };
   useEffect(() => {
     setLoggedIn(window.localStorage.getItem("loggedIn"));

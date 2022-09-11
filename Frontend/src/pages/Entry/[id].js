@@ -54,7 +54,7 @@ export default function Entry() {
       .post("/api/entry/delete", {
         entry_id: location.pathname.split("/")[4],
       })
-      .then(navigate(-1));
+      .then((window.location = "/book/" + location.pathname.split("/")[2]));
   };
   const editEntry = () =>
     navigate(

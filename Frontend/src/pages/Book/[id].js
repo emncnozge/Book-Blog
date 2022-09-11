@@ -99,7 +99,7 @@ export default function Book() {
       });
   };
   function handleNavigate(bookid, entryid) {
-    navigate("/book/" + bookid + "/entry/" + entryid);
+    window.location = "/book/" + bookid + "/entry/" + entryid;
   }
   useEffect(() => {
     setLoggedIn(window.localStorage.getItem("loggedIn"));

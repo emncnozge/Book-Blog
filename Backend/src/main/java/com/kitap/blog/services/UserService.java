@@ -148,7 +148,7 @@ public class UserService {
                 new FileOutputStream(serverFile));
         stream.write(bytes);
         stream.close();
-        httpServletResponse.sendRedirect("http://127.0.0.1:3000/profile");
+        httpServletResponse.sendRedirect("http://localhost:3000/profile");
     }
 
     public InputStreamResource getUserPhoto(Long user_id, HttpServletResponse response) throws IOException {

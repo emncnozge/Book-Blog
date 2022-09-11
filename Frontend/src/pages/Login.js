@@ -175,54 +175,56 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Kayıt ol</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <input
-            name="email"
-            type="email"
-            className="form-control form-control-lg  mt-2 mb-3"
-            placeholder="E-posta"
-            value={registerEmail}
-            onChange={handleRegisterEmail}
-            required
-          />
+      <Modal show={show} onHide={handleClose} centered>
+        <form onSubmit={handleRegister}>
+          <Modal.Header closeButton>
+            <Modal.Title>Kayıt ol</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <input
+              name="email"
+              type="email"
+              className="form-control form-control-lg  mt-2 mb-3"
+              placeholder="E-posta"
+              value={registerEmail}
+              onChange={handleRegisterEmail}
+              required
+            />
 
-          <input
-            name="email"
-            type="text"
-            className="form-control form-control-lg  mt-2 mb-3"
-            placeholder="Ad Soyad"
-            value={registerName}
-            onChange={handleRegisterName}
-            required
-          />
-          <input
-            name="email"
-            type="password"
-            className="form-control form-control-lg  mt-2 mb-3"
-            placeholder="Şifre"
-            value={registerPassword}
-            onChange={handleRegisterPassword}
-            required
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <input
-            type="button"
-            className="btn btn-secondary"
-            onClick={handleClose}
-            value="İptal"
-          ></input>
-          <input
-            type="button"
-            className="btn btn-primary"
-            onClick={handleRegister}
-            value="Kayıt ol"
-          ></input>
-        </Modal.Footer>
+            <input
+              name="email"
+              type="text"
+              className="form-control form-control-lg  mt-2 mb-3"
+              placeholder="Ad Soyad"
+              value={registerName}
+              onChange={handleRegisterName}
+              required
+            />
+            <input
+              name="email"
+              type="password"
+              className="form-control form-control-lg  mt-2 mb-3"
+              placeholder="Şifre"
+              value={registerPassword}
+              onChange={handleRegisterPassword}
+              required
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <input
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleClose}
+              value="İptal"
+            ></input>
+            <input
+              type="submit"
+              className="btn btn-primary"
+              onSubmit={handleRegister}
+              value="Kayıt ol"
+            ></input>
+          </Modal.Footer>
+        </form>
       </Modal>
     </>
   );

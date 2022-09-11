@@ -11,7 +11,7 @@ export default function User() {
   const [entries, setEntries] = useState([]);
   const location = useLocation();
   function handleNavigate(bookid, entryid) {
-    navigate("/book/" + bookid + "/entry/" + entryid);
+    window.location = "/book/" + bookid + "/entry/" + entryid;
   }
   const handleEntries = async () => {
     const axios = require("axios");
