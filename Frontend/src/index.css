@@ -308,6 +308,10 @@ code {
 
 }
 
+.card-title {
+  font-size: 13pt !important;
+}
+
 .ellipsis {
   text-overflow: ellipsis;
   white-space: nowrap;
