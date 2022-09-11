@@ -43,7 +43,6 @@ export default function EditEntry() {
     axios
       .get("/api/entry/getEntry?entry_id=" + location.pathname.split("/")[4])
       .then((response) => {
-        console.log(response.data);
         setHeader(response.data.header);
         setEntry(response.data.entry);
       });

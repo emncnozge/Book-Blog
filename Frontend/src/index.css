@@ -154,7 +154,7 @@ code {
 
 .dropdowncontent a {
   color: black;
-  padding: 12px 16px;
+  padding: 10px 14px;
   text-decoration: none;
   display: block;
   border-radius: 1rem;
@@ -167,7 +167,9 @@ code {
   color: #FF5722
 }
 
-
+.right {
+  text-align: right !important;
+}
 
 .underPhoto {
   font-size: 15pt;

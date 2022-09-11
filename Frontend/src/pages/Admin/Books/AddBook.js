@@ -37,7 +37,6 @@ export default function Profile() {
   const handleGenre = (e) => setGenre(e.target.value);
 
   async function save() {
-    console.log(selectedAuthor.value);
     axios
       .post("/api/book", {
         name,

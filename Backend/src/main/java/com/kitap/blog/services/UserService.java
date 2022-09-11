@@ -121,6 +121,7 @@ public class UserService {
             if (!Objects.equals(user.getIs_admin(), isAdmin)) {
                 user.setIs_admin(isAdmin);
             }
+            System.out.println(isAdmin);
             return true;
         }
         return false;

@@ -77,14 +77,14 @@ public class UserController {
                 String.valueOf(body.get("password")),
                 String.valueOf(body.get("about")),
                 String.valueOf(body.get("photo_url")),
-                Boolean.valueOf(String.valueOf(body.get("isAdmin"))),
+                (Boolean) body.get("is_admin"),
                 String.valueOf(body.get("token"))
         );
     }
 
 
     @PostMapping("/photo")
-    public void addUserPhoto(@RequestParam("user_id") Long user_id, @RequestParam("image") MultipartFile multipartFile,HttpServletResponse httpServletResponse) throws IOException {
+    public void addUserPhoto(@RequestParam("user_id") Long user_id, @RequestParam("image") MultipartFile multipartFile, HttpServletResponse httpServletResponse) throws IOException {
         userService.addUserPhoto(user_id, multipartFile, httpServletResponse);
     }
 

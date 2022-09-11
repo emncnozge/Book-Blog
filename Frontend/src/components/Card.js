@@ -52,12 +52,12 @@ export default function Card(props) {
         key={props.data.user_id}
         className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
       >
-        <Link to={"/author/" + props.data.user_id} className="author">
+        <Link to={"/user/" + props.data.user_id} className="user">
           <div className="card">
             <div className="img-top">
               <img
-                alt="author_photo"
-                src={"/api/author/photo/" + props.data.user_id}
+                alt="user_photo"
+                src={"/api/user/photo/" + props.data.user_id}
                 className="image"
               />
             </div>

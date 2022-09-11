@@ -170,65 +170,67 @@ export default function Navbar() {
               )}
             </Overlay>
           </div>
-          <div
-            className="col my-auto dropdown profile"
-            style={{ float: "right", textAlign: "right" }}
-          >
+          <div className="col-3 col-sm-4 col-lg-7 my-auto right">
             <div
-              style={{
-                border: "2px solid #999",
-                borderRadius: "3rem",
-                textAlign: "left",
-                padding: ".4rem",
-                width: "fit-content",
-                float: "right",
-              }}
-              className="dropbtn"
-              onClick={(e) => $(".dropdowncontent").slideToggle()}
+              className="dropdown profile"
+              style={{ float: "right", textAlign: "right" }}
             >
-              <span className="d-none d-md-inline me-2">{name}</span>
-              <img
+              <div
                 style={{
-                  width: "50px",
-                  height: "50px",
-                  borderRadius: "50%",
-                  objectFit: "cover",
+                  border: "2px solid #999",
+                  borderRadius: "3rem",
+                  textAlign: "left",
+                  padding: ".4rem",
+                  width: "fit-content",
+                  float: "right",
                 }}
-                alt="user_photo"
-                src={"/api/user/photo/" + user_id}
-                color="#999"
-              ></img>
-              <div className="dropdowncontent">
-                {window.localStorage.getItem("isAdmin") == true ? (
-                  <>
-                    <div
-                      style={{
-                        cursor: "auto",
-                        textAlign: "center",
-                        marginTop: ".4rem",
-                      }}
-                    >
-                      Admin
+                className="dropbtn"
+                onClick={(e) => $(".dropdowncontent").slideToggle()}
+              >
+                <span className="d-none d-md-inline me-2">{name}</span>
+                <img
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                  alt="user_photo"
+                  src={"/api/user/photo/" + user_id}
+                  color="#999"
+                ></img>
+                <div className="dropdowncontent">
+                  {window.localStorage.getItem("isAdmin") == "true" ? (
+                    <>
+                      <div
+                        style={{
+                          cursor: "auto",
+                          textAlign: "center",
+                          marginTop: ".4rem",
+                        }}
+                      >
+                        Admin
+                        <hr style={{ margin: 0, marginTop: "5px" }} />
+                      </div>
+                      <Link to="/admin/users">Kullanıcılar</Link>
+                      <Link to="/admin/books">Kitaplar</Link>
+                      <Link to="/admin/addbook">Kitap Ekle</Link>
+                      <Link to="/admin/authors">Yazarlar</Link>
+                      <Link to="/admin/addauthor">Yazar Ekle</Link>
                       <hr style={{ margin: 0, marginTop: "5px" }} />
-                    </div>
-                    <Link to="/admin/users">Kullanıcılar</Link>
-                    <Link to="/admin/books">Kitaplar</Link>
-                    <Link to="/admin/addbook">Kitap Ekle</Link>
-                    <Link to="/admin/authors">Yazarlar</Link>
-                    <Link to="/admin/addauthor">Yazar Ekle</Link>
-                    <hr style={{ margin: 0, marginTop: "5px" }} />
-                  </>
-                ) : (
-                  <></>
-                )}
-                <Link to="/profile">Profil</Link>
-                <Link to="/favoritebooks">Favori Kitaplar</Link>
-                <Link to="/favoriteauthors">Favori Yazarlar</Link>
-                <Link to="/favoriteusers">Favori Kullanıcılar</Link>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  <Link to="/profile">Profil</Link>
+                  <Link to="/favoritebooks">Favori Kitaplar</Link>
+                  <Link to="/favoriteauthors">Favori Yazarlar</Link>
+                  <Link to="/favoriteusers">Favori Kullanıcılar</Link>
 
-                <Link to="/login" onClick={handleLogout}>
-                  Çıkış Yap
-                </Link>
+                  <Link to="/login" onClick={handleLogout}>
+                    Çıkış Yap
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

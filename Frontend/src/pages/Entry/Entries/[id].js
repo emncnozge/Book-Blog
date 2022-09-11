@@ -162,7 +162,6 @@ export default function Entries() {
             <div className="col-12 col-sm-7 col-md-8 rightSide">
               <div className="about">Kitap Hakkında</div>
               <p className="aboutIcerik">{about}</p>
-              {console.log(entries)}
               {entries?.length > 0 ? (
                 <div className="about mt-4">Tüm Blog Gönderileri</div>
               ) : (

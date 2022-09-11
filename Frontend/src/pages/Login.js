@@ -109,7 +109,7 @@ export default function Login() {
             alert("Kayıt başarılı.");
             navigate("/");
           } else {
-            setBackendError(true);
+            alert("Hata! Bu kullanıcı zaten kayıtlı!");
           }
         })
         .catch(function (error) {
