@@ -119,7 +119,7 @@ public class BookService {
         stream.write(bytes);
         stream.close();
 
-        httpServletResponse.sendRedirect("http://localhost:3000/admin/editbook/" + book_id);
+        httpServletResponse.sendRedirect("http://127.0.0.1:3000/admin/editbook/" + book_id);
     }
 
     public InputStreamResource getBookPhoto(Long book_id, HttpServletResponse response) throws IOException {

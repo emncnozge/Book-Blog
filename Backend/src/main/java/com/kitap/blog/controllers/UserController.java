@@ -31,7 +31,6 @@ public class UserController {
         this.userService = userService;
     }
 
-
     @PostMapping("/login")
     public Long login(@RequestBody Map<String, Object> body) throws NoSuchAlgorithmException {
         return userService.login(String.valueOf(body.get("email")),
@@ -65,7 +64,8 @@ public class UserController {
 
     @DeleteMapping("/deleteUser")
     public boolean deleteUser(@RequestBody Map<String, Object> body) {
-        return userService.deleteUser(Long.valueOf(String.valueOf(body.get("user_id"))), String.valueOf(body.get("token")));
+        return userService.deleteUser(Long.valueOf(String.valueOf(body.get("user_id"))),
+                String.valueOf(body.get("token")));
     }
 
     @PutMapping("/updateUser")
@@ -77,14 +77,13 @@ public class UserController {
                 String.valueOf(body.get("password")),
                 String.valueOf(body.get("about")),
                 String.valueOf(body.get("photo_url")),
-                (Boolean) body.get("is_admin"),
-                String.valueOf(body.get("token"))
-        );
+                Boolean.parseBoolean(String.valueOf(body.get("is_admin"))),
+                String.valueOf(body.get("token")));
     }
 
-
     @PostMapping("/photo")
-    public void addUserPhoto(@RequestParam("user_id") Long user_id, @RequestParam("image") MultipartFile multipartFile, HttpServletResponse httpServletResponse) throws IOException {
+    public void addUserPhoto(@RequestParam("user_id") Long user_id, @RequestParam("image") MultipartFile multipartFile,
+            HttpServletResponse httpServletResponse) throws IOException {
         userService.addUserPhoto(user_id, multipartFile, httpServletResponse);
     }
 
