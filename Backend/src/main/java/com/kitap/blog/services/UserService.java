@@ -68,6 +68,7 @@ public class UserService {
             user.setPassword(Base64.getEncoder().encodeToString(hashedPassword));
             user.setAbout("");
             user.setPhoto_url("");
+            user.setIs_admin(false);
             userRepository.saveAndFlush(user);
             return user.getUser_id();
         } else
@@ -85,7 +86,7 @@ public class UserService {
 
     @Transactional
     public boolean updateUser(Long user_id, String email, String name, String password, String about, String photo_url,
-            boolean isAdmin, String token) throws NoSuchAlgorithmException {
+                              boolean isAdmin, String token) throws NoSuchAlgorithmException {
         if (token.equals(appToken)) {
             if (email.equals("null"))
                 email = null;

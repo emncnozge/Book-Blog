@@ -144,19 +144,7 @@ export default function User() {
               <div className="about">Kullanıcı Hakkında</div>
               <p className="aboutIcerik">{about}</p>
               {entries?.length > 0 ? (
-                <>
-                  <div className="about mt-4 mb-0">Son Blog Gönderileri</div>
-                  <div className="all mb-2">
-                    <Link
-                      to={
-                        "/book/" + location.pathname.split("/")[2] + "/entries"
-                      }
-                      className="all"
-                    >
-                      Tüm Gönderileri Gör
-                    </Link>
-                  </div>
-                </>
+                <div className="about mt-4 mb-2">Blog Gönderileri</div>
               ) : (
                 <></>
               )}

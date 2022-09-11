@@ -106,6 +106,7 @@ export default function Login() {
               .catch(function (error) {
                 console.log(error);
               });
+            alert("Kayıt başarılı.");
             navigate("/");
           } else {
             setBackendError(true);
@@ -213,7 +214,7 @@ export default function Login() {
             type="button"
             className="btn btn-secondary"
             onClick={handleClose}
-            value="Close"
+            value="İptal"
           ></input>
           <input
             type="button"
